@@ -15,36 +15,30 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.util;
+package org.rtefx.plugins.brMatcher;
 
 import junit.framework.*;
 
-/** Extended test runner.
+/** Regression test for REDBracketMatcherManager
   * @author rli@chello.at
   * @tier test
   */
-public class RTestRunner extends junit.textui.TestRunner {
-	public void startTest(Test test) {
-		writer().println("Starting " + test + " now.");
-		fStart = System.currentTimeMillis();
-	}
-
-	public void endTest(Test test) {
-		long end = System.currentTimeMillis();
-		writer().println((end - fStart) + " msec. for " + test);
-	}
-
-	public static void main(String args[]) {
-		RTestRunner aTestRunner= new RTestRunner();
-		Test suite= aTestRunner.getTest(args[0]);
-		aTestRunner.doRun(suite, false);
-		System.exit(0);
-	}
-
-	static public void run(Test suite) {
-		RTestRunner aTestRunner= new RTestRunner();
-		aTestRunner.doRun(suite, false);
+public class RTestREDBracketMatcherManager extends TestCase {
+	public RTestREDBracketMatcherManager(String name) {
+		super(name);
 	}
 	
-	long fStart;
+	public void testDefinitionManagement() {
+		assertEquals(null, REDBracketMatcherManager.createMatcher("maynotexist"));
+		assertTrue(REDBracketMatcherManager.createMatcher("C++") != null);
+		assertTrue(REDBracketMatcherManager.createMatcher("Java") != null);
+		REDBracketMatcherDefinition def1 = new REDBracketMatcherDefinition();
+		def1.setName("foo");
+		REDBracketMatcherManager.addDefinition(def1);
+		assertNotNull(REDBracketMatcherManager.createMatcher("foo"));
+	}
+		
+	public static Test suite() {
+		return new TestSuite(RTestREDBracketMatcherManager.class);
+	}
 }

@@ -20,7 +20,7 @@ package org.rtefx;
 import java.io.*;
 import java.util.*;
 
-import org.rtefx.lineTree.*;
+import org.rtefx.linetree.*;
 import org.rtefx.file.*;
 import org.rtefx.rexparser.*;
 
