@@ -17,7 +17,7 @@
  
 package org.rtefx.linetree;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** A mark in the line tree.
   * Marks float around in the text and can quickly give their position if needed.

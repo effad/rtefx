@@ -17,8 +17,14 @@
  
 package org.rtefx.rexparser;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /** Regular expression parser class
   * This class uses a regular expression package to implement parsers built at runtime.

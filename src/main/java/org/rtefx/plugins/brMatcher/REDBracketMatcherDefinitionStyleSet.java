@@ -17,10 +17,16 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import java.util.*;
-import org.rtefx.*;
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import org.rtefx.REDStyle;
+import org.rtefx.REDStyleManager;
+import org.rtefx.util.REDGLog;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLManager;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Bracket matcher definition style sets. There are two kinds of style to a 
   * definition: <UL>

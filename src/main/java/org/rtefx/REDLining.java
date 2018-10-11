@@ -17,8 +17,9 @@
  
 package org.rtefx;
 
-import org.rtefx.util.*;
-import java.awt.*;
+import java.awt.Graphics;
+
+import org.rtefx.util.REDGLog;
 
 /** Enumeration of linings for text. Also contains the painting logic.
   * @author rli@chello.at

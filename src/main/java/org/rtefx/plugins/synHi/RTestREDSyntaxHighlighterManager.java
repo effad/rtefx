@@ -17,7 +17,9 @@
  
 package org.rtefx.plugins.synHi;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /** Regression test for REDSyntaxHighlighterManager
   * @author rli@chello.at

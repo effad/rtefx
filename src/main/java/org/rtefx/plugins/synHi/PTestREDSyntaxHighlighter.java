@@ -17,7 +17,8 @@
  
 package org.rtefx.plugins.synHi;
 
-import org.rtefx.*;
+import org.rtefx.PTestStopWatch;
+import org.rtefx.REDEditor;
 
 /** Test performance of syntax highlighter.
   * Must be started from the directory containing PTestREDSyntaxHighlighter.1.in, i.e. red/plugins/synHi.

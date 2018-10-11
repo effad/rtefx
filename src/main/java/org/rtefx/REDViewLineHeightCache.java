@@ -17,7 +17,8 @@
  
 package org.rtefx;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /** Auxiliary class for maintaining a small line height cache. 
   * @author rli@chello.at

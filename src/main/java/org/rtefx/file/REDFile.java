@@ -17,8 +17,12 @@
  
 package org.rtefx.file;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /** File with buffered access.
   * @author rli@chello.at

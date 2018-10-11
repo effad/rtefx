@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import java.util.*;
+import java.util.EventListener;
 
 /** listener interface for view events
   * @author rli@chello.at

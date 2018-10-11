@@ -17,9 +17,13 @@
  
 package org.rtefx;
 
-import java.io.*;
-import java.util.*;
-import org.rtefx.util.*;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Iterator;
+
+import org.rtefx.util.REDResourceInputStreamIterator;
+import org.rtefx.util.REDResourceManager;
+import org.rtefx.util.REDTracer;
 
 /** Style manager.  Singleton pattern.
   * This class manages a hierarchy of styles loaded from xml - files. To be loaded an xml - file must fulfill these conditions:

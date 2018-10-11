@@ -17,9 +17,17 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import java.util.*;
-import org.rtefx.*;
-import org.rtefx.xml.*;
+import java.util.Iterator;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDStream;
+import org.rtefx.REDStreamDirection;
+import org.rtefx.REDStyle;
+import org.rtefx.REDStyleManager;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLManager;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Bracket matcher definition pattern. These define the patterns to match.
   * Note that, despite the name "bracket" matcher, patterns do not have to 

@@ -17,8 +17,8 @@
  
 package org.rtefx.util;
 
-import java.util.jar.*;
-import java.util.zip.*;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 /** File - entry pair. Auxiliary class 
   * @author rli@chello.at

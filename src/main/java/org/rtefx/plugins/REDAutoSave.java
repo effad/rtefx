@@ -17,9 +17,13 @@
  
 package org.rtefx.plugins;
 
-import org.rtefx.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDPlugin;
 
 /** This plugin makes backup copies of modified texts periodically
   * @author rli@chello.at

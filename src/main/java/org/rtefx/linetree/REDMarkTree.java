@@ -17,8 +17,11 @@
  
 package org.rtefx.linetree;
 
-import java.util.*;
-import org.rtefx.*;
+import java.util.ArrayList;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDStyle;
+import org.rtefx.REDTextEventListener;
 
 /** Mark tree data structure. 
   * @author rli@chello.at

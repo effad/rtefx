@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import java.text.*;
+import java.text.CharacterIterator;
 
 /** Character iterator implementation for RED.
   * @author rli@chello.at

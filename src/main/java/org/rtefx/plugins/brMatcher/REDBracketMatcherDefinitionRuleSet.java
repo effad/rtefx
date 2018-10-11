@@ -17,7 +17,10 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import org.rtefx.xml.*;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLManager;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Bracket matcher definition rule set. Rule sets define which bracket matching actions should be attempted.
   * @author rli@chello.at

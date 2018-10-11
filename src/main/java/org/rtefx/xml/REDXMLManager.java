@@ -17,11 +17,18 @@
  
 package org.rtefx.xml;
 
-import java.io.*;
-import java.util.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-import org.rtefx.util.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Stack;
+
+import org.rtefx.util.REDTracer;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 
 /** XML file manager.

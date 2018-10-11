@@ -17,7 +17,8 @@
  
 package org.rtefx.rexparser;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /** Regular expression parser class rule
   * @author rli@chello.at

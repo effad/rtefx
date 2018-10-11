@@ -17,11 +17,21 @@
  
 package org.rtefx;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import org.rtefx.xml.*;
-import org.rtefx.util.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeMap;
+
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLHandlerWriter;
+import org.rtefx.xml.REDXMLManager;
+import org.rtefx.xml.REDXMLReadable;
 
 /** REDStyle objects contain foreground and background color, font and lining information
   * @author rli@chello.at

@@ -17,8 +17,11 @@
  
 package org.rtefx.xml;
 
-import org.xml.sax.helpers.*;
-import java.util.*;
+import java.util.EmptyStackException;
+import java.util.HashMap;
+import java.util.Stack;
+
+import org.xml.sax.helpers.DefaultHandler;
 
 
 /** XML handler base class.

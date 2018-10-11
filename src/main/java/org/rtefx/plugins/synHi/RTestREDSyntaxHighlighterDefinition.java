@@ -17,10 +17,15 @@
  
 package org.rtefx.plugins.synHi;
 
-import junit.framework.*;
-import org.rtefx.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.util.Iterator;
+
+import org.rtefx.REDLining;
+import org.rtefx.REDStyle;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /** Regression test for REDSyntaxHighlighterDefinition
   * @author rli@chello.at

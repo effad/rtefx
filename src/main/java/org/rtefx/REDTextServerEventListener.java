@@ -18,7 +18,7 @@
 package org.rtefx;
 
 
-import java.util.*;
+import java.util.EventListener;
 
 /** Listener interface for text server events.
   * @author rli@chello.at

@@ -17,9 +17,19 @@
  
 package org.rtefx.util;
 
-import org.rtefx.xml.*;
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLManager;
+import org.rtefx.xml.REDXMLReadable;
 
 /** XML configured trace facility. A Tracer is used for debugging a program.
   * The enclosing tag is &lt;Tracer level="levelString"&gt; ... &lt;/Tracer&gt;, where levelString may be one of "Off", "Error", "Warning", "Info". 

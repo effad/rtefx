@@ -17,8 +17,8 @@
  
 package org.rtefx.xml;
 
-import org.xml.sax.*;
-import org.rtefx.util.*;
+import org.rtefx.util.REDTracer;
+import org.xml.sax.SAXException;
 
 /** XML handler loader handler.
   * This handler processes &lt;LOAD tag="tagName"&gt;classname&lt;/LOAD&gt; entries,  loads and registers the fully qualified <CODE>

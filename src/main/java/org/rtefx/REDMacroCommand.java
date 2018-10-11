@@ -17,7 +17,8 @@
  
 package org.rtefx;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /** Macro command class.
   * This class takes encapsulates multiple REDCommands.

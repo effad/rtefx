@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 
 /** controller for read-only mode. Will prevent all input from changing the text
   * @author rli@chello.at

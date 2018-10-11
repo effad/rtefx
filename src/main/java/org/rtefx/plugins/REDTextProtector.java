@@ -17,11 +17,18 @@
  
 package org.rtefx.plugins;
 
-import org.rtefx.*;
-import org.rtefx.linetree.*;
-import org.rtefx.util.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDPlugin;
+import org.rtefx.REDView;
+import org.rtefx.REDViewController;
+import org.rtefx.REDViewControllerDecorator;
+import org.rtefx.linetree.REDMark;
+import org.rtefx.linetree.REDMarkTree;
+import org.rtefx.util.REDTracer;
 
 /** This plugin allows to protect (i.e. make readonly) parts of a text.
   * @author rli@chello.at

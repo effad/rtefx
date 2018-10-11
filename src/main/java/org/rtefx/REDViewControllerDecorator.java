@@ -17,7 +17,8 @@
  
 package org.rtefx;
 
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /** decorator base class - this class provides a decorator pattern for REDViewController
   * if you want to add/change functionality of a controller, subclass from this decorator class and overwrite the methods you're interested in

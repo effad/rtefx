@@ -17,7 +17,8 @@
  
 package org.rtefx.plugins.synHi;
 
-import org.rtefx.*;
+import org.rtefx.REDEditor;
+import org.rtefx.REDStyle;
 
 /** Auxiliary class which represents one entry in the operation batch produced by concurrent highlighting.
   * @author rli@chello.at

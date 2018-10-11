@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import org.rtefx.file.*;
+import org.rtefx.file.REDFileRider;
 
 // TBD: Refine exception handling
 

@@ -17,12 +17,19 @@
  
 package org.rtefx.plugins.synHi;
 
-import java.util.*;
-import javax.swing.*;
-import org.rtefx.*;
-import org.rtefx.rexparser.*;
-import org.rtefx.xml.*;
-import org.rtefx.util.*;
+import java.util.LinkedList;
+
+import javax.swing.SwingUtilities;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDStyle;
+import org.rtefx.REDStyleManager;
+import org.rtefx.rexparser.REDRexMalformedPatternException;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Rule base class. 
   * @author rli@chello.at

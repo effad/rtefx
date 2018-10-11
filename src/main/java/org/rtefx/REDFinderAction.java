@@ -17,7 +17,9 @@
  
 package org.rtefx;
 
-import org.rtefx.rexparser.*;
+import org.rtefx.rexparser.REDRexAction;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.rexparser.REDRexParserMatch;
 
 /** Wrapper class to translate match offsets 
   * @author rli@chello.at

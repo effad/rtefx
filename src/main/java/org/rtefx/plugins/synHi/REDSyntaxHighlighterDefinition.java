@@ -17,9 +17,13 @@
  
 package org.rtefx.plugins.synHi;
 
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Syntax highlighter definitions. Needed to create actual highlighters.
   * Syntax highlighter definitions are a collection of Syntax highlighter rules.

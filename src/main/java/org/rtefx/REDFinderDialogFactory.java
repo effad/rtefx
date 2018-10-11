@@ -17,10 +17,24 @@
  
 package org.rtefx;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import org.rtefx.rexparser.*;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+import org.rtefx.rexparser.REDRexMalformedPatternException;
 
 /** Factory for GUI elements  in a find/replace dialog for RED.
   * You can use this class in two ways:

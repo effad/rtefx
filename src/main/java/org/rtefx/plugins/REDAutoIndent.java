@@ -17,9 +17,17 @@
  
 package org.rtefx.plugins;
 
-import org.rtefx.*;
-import java.awt.event.*;
-import java.util.regex.*;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.rtefx.REDAuxiliary;
+import org.rtefx.REDEditor;
+import org.rtefx.REDPlugin;
+import org.rtefx.REDView;
+import org.rtefx.REDViewController;
+import org.rtefx.REDViewControllerDecorator;
 
 /** Automatic and intelligent indentation plugin.
   * This plugin provides intelligent behaviour for indentation.

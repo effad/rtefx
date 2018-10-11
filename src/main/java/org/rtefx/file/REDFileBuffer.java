@@ -17,7 +17,7 @@
  
 package org.rtefx.file;
 
-import java.io.*; 
+import java.io.IOException; 
 
 /** File cache object used by REDFile and REDFileRider.
   * @author rli@chello.at

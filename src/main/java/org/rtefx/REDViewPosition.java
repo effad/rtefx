@@ -18,7 +18,8 @@
 package org.rtefx;
 
 
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 //---- newclass ---------------------------------------------------------
 /** View positions 

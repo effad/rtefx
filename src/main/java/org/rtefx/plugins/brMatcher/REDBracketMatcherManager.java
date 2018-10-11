@@ -17,10 +17,16 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import java.util.*;
-import java.io.*;
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDResourceInputStreamIterator;
+import org.rtefx.util.REDResourceManager;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLManager;
 
 /** Bracket matcher manager.
   * This class manages bracket matcher definitions and allows creation of bracket matchers.

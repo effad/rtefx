@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import java.awt.*;
+import java.awt.Toolkit;
 
 /** auxiliary functions and constants for the RED - System
   * @author rli@chello.at

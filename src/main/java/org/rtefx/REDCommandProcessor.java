@@ -17,7 +17,7 @@
  
 package org.rtefx;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** command processor - stores a finite number of REDCommand objects
   * also manages a freeze point to determine whether a text is modified

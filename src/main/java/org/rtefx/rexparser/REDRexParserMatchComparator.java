@@ -17,7 +17,7 @@
  
 package org.rtefx.rexparser;
 	
-import java.util.*;
+import java.util.Comparator;
 	
 /** Regular expression parser match comparator. This comparator compares to parser matches, based on the 
   * compareTo function of REDRexParserMatch.

@@ -17,7 +17,10 @@
  
 package org.rtefx;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /** REDTextServer - Singleton which manages pool of texts and deals with model sharing
   * @author rli@chello.at

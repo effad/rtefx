@@ -17,7 +17,8 @@
  
 package org.rtefx.linetree;
 
-import java.util.*;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 /** Edge data associated with REDEdges.
   * @author rli@chello.at

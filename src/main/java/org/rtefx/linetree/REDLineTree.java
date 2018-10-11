@@ -17,7 +17,7 @@
  
 package org.rtefx.linetree;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** Line Tree data structure. This class is not for the fainthearted. Read the concept paper (TWiki) to understand how it works
   * @author rli@chello.at

@@ -17,8 +17,12 @@
  
 package org.rtefx;
 
-import java.awt.event.*;
-import javax.swing.event.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+
+import javax.swing.event.MouseInputListener;
 
 /**  Defines standard editor feel and consumes input from a REDView 
   * @author rli@chello.at

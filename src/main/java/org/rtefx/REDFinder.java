@@ -17,10 +17,19 @@
  
 package org.rtefx;
 
-import org.rtefx.rexparser.*;
-import org.rtefx.linetree.*;
-import javax.swing.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.TreeSet;
+
+import javax.swing.DefaultComboBoxModel;
+
+import org.rtefx.linetree.REDMark;
+import org.rtefx.linetree.REDMarkTree;
+import org.rtefx.rexparser.REDRexAction;
+import org.rtefx.rexparser.REDRexLineSource;
+import org.rtefx.rexparser.REDRexMalformedPatternException;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.rexparser.REDRexParserMatch;
+import org.rtefx.rexparser.REDRexParserStopper;
 
 /** Finder for REDEditor objects.
   * This class allows to comfortably do find & replace operations.

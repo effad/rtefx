@@ -17,8 +17,9 @@
  
 package org.rtefx.xml;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Stack;
 
 
 /** XML writer. This class is responsible for writing XML. 

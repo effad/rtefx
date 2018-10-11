@@ -17,7 +17,7 @@
  
 package org.rtefx.linetree;
 
-import org.rtefx.*;
+import org.rtefx.REDAssert;
 
 /** A node in the line tree.
   * @author rli@chello.at

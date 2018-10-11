@@ -17,15 +17,21 @@
  
 package org.rtefx;
 
-import org.rtefx.file.*;
-import org.rtefx.linetree.*;
-import org.rtefx.rexparser.*;
-import org.rtefx.util.*;
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
-import java.io.*;
-import java.text.*;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.io.File;
+import java.text.CharacterIterator;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+
+import org.rtefx.file.REDFile;
+import org.rtefx.linetree.REDMarkTree;
+import org.rtefx.rexparser.REDRexLineSource;
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDTracer;
 
 /** Editor widget.
   * This class provides the basic/central API for clients of RED to access.

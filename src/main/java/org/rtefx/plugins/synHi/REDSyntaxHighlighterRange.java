@@ -17,11 +17,18 @@
  
 package org.rtefx.plugins.synHi;
 
-import org.rtefx.*;
-import org.rtefx.rexparser.*;
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.rtefx.REDStyle;
+import org.rtefx.rexparser.REDRexAction;
+import org.rtefx.rexparser.REDRexMalformedPatternException;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.rexparser.REDRexParserMatch;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Range rule. 
   * Range rules have a start and end regexp. They can be used for literals delimited by special characters (strings, comments, etc.)

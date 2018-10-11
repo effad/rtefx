@@ -17,8 +17,10 @@
  
 package org.rtefx.xml;
 
-import org.xml.sax.*;
-import java.util.*;
+import java.util.HashMap;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 /** XML reader. This class is responsible for reading XML. It has nothing to do with the REDXMLHandlerReader of SaX.
   * @author rli@chello.at

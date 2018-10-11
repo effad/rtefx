@@ -17,8 +17,14 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import java.awt.event.*;
-import org.rtefx.*;
+import java.awt.event.MouseEvent;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDPlugin;
+import org.rtefx.REDStyle;
+import org.rtefx.REDView;
+import org.rtefx.REDViewController;
+import org.rtefx.REDViewControllerDecorator;
 
 /** This plugin performs bracket matching.
   * @author rli@chello.at

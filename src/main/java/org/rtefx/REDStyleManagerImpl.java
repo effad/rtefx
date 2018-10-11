@@ -17,13 +17,21 @@
  
 package org.rtefx;
 
-import java.awt.*;
-import java.io.*;
-import java.lang.ref.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.rtefx.xml.*;
-import org.rtefx.util.*;
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.TreeMap;
+
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLManager;
 
 /** Style manager implementation.  
   * @author rli@chello.at

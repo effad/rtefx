@@ -17,8 +17,9 @@
  
 package org.rtefx;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+
+import javax.swing.JLabel;
 
 /** A label which implements REDFinderLog, to be used as log in Find/Replace GUI.
   * @author rli@chello.at

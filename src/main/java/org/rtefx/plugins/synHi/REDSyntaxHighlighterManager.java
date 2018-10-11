@@ -17,10 +17,15 @@
  
 package org.rtefx.plugins.synHi;
 
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+
+import org.rtefx.util.REDResourceInputStreamIterator;
+import org.rtefx.util.REDResourceManager;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLManager;
 
 /** Syntax highlighter manager.
   * This class manages highlighter definitions and allows creation of syntax highlighters.

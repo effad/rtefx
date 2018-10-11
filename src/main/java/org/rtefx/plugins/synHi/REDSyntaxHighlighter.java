@@ -17,13 +17,25 @@
  
 package org.rtefx.plugins.synHi;
 
-import java.lang.reflect.*;
-import java.util.*;
-import javax.swing.*;
-import org.rtefx.*;
-import org.rtefx.linetree.*;
-import org.rtefx.rexparser.*;
-import org.rtefx.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+
+import javax.swing.SwingUtilities;
+
+import org.rtefx.REDAssert;
+import org.rtefx.REDEditor;
+import org.rtefx.REDPlugin;
+import org.rtefx.REDStyleManager;
+import org.rtefx.linetree.REDMark;
+import org.rtefx.linetree.REDMarkTree;
+import org.rtefx.rexparser.REDRexMalformedPatternException;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.rexparser.REDRexParserStopper;
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDTracer;
 
 /** This plugin performs on-the-fly syntax highlighting.
   * @author rli@chello.at

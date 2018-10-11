@@ -17,7 +17,10 @@
  
 package org.rtefx.rexparser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /** String finder for simple regexpes (a|b|c)
   * @author rli@chello.at

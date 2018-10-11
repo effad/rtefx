@@ -17,7 +17,7 @@
  
 package org.rtefx.xml;
 
-import java.io.*;
+import java.io.IOException;
 
 /** XML persistence interface for writing.
   * @author rli@chello.at

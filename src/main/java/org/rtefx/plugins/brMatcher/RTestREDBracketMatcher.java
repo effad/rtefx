@@ -17,11 +17,17 @@
  
 package org.rtefx.plugins.brMatcher;
 
-import java.io.*;
-import junit.framework.*;
-import org.rtefx.*;
-import org.rtefx.util.*;
-import org.rtefx.plugins.synHi.*;
+import java.io.InputStream;
+
+import org.rtefx.REDStyleManager;
+import org.rtefx.RTestControllerBase;
+import org.rtefx.plugins.synHi.REDSyntaxHighlighter;
+import org.rtefx.plugins.synHi.REDSyntaxHighlighterManager;
+import org.rtefx.util.REDResourceInputStreamIterator;
+import org.rtefx.util.REDResourceManager;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /** Regression test for REDBracketMatcher
   * @author rli@chello.at

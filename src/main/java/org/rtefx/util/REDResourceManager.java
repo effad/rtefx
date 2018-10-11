@@ -17,10 +17,15 @@
  
 package org.rtefx.util;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.jar.*;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.jar.JarFile;
 
 /** Resource management utility class. Singleton pattern with convenience methods.
   * @author rli@chello.at

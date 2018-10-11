@@ -17,12 +17,20 @@
  
 package org.rtefx.plugins.synHi;
 
-import java.util.*;
-import javax.swing.*;
-import org.rtefx.*;
-import org.rtefx.rexparser.*;
-import org.rtefx.util.*;
-import org.rtefx.xml.*;
+import java.util.LinkedList;
+
+import javax.swing.SwingUtilities;
+
+import org.rtefx.REDEditor;
+import org.rtefx.REDStyle;
+import org.rtefx.rexparser.REDRexAction;
+import org.rtefx.rexparser.REDRexMalformedPatternException;
+import org.rtefx.rexparser.REDRexParser;
+import org.rtefx.rexparser.REDRexParserMatch;
+import org.rtefx.util.REDTracer;
+import org.rtefx.xml.REDXMLCallbackError;
+import org.rtefx.xml.REDXMLHandlerReader;
+import org.rtefx.xml.REDXMLReadable;
 
 /** Keyword rules. 
   * Keyword rules are simple regular expressions highlit with a certain style.

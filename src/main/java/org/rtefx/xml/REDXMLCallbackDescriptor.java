@@ -17,10 +17,19 @@
  
 package org.rtefx.xml;
 
-import org.xml.sax.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.rtefx.util.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import org.rtefx.util.REDGLog;
+import org.rtefx.util.REDTracer;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 /** Callback descriptor class. Instances of this class are used to call back registered methods.
   * @author rli@chello.at

@@ -18,7 +18,7 @@
 package org.rtefx;
 
 
-import java.util.*;
+import java.util.EventListener;
 
 /** listener interface for text events
   * for *Insert, *Delete and *StyleChange it is guaranteed that before and after are always called both
