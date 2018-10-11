@@ -10,7 +10,7 @@ import java.util.*;
 import red.lineTree.*;
 
 /** REDView - the visual (Swing) component used to display REDTexts 
-  * @author Robert Lichtenberger - robert.lichtenberger@windriver.com
+  * @author Robert Lichtenberger - r.lichtenberger@gmail.com
   * @tier system
   * @invariant fText != null
   * @invariant fSelFrom >= 0

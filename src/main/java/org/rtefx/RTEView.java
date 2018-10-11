@@ -9,6 +9,7 @@ public class RTEView extends Control {
 
 	public RTEView(REDText text) {
 		this.text = text;
+		setStyle("-fx-background-color: chocolate");
 	}
 	
 	@Override
@@ -16,5 +17,7 @@ public class RTEView extends Control {
 		return new RTEViewSkin(this);
 	}
 	
-
+	public int getLines() {
+		return text.getNrOfLines();
+	}	
 }
