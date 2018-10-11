@@ -15,36 +15,35 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.synHi;
+package org.rtefx.plugins.brmatcher;
+
+import org.rtefx.plugins.brmatcher.REDBracketMatcherDefinition;
+import org.rtefx.plugins.brmatcher.REDBracketMatcherManager;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/** Regression test for REDSyntaxHighlighterManager
+/** Regression test for REDBracketMatcherManager
   * @author rli@chello.at
   * @tier test
   */
-public class RTestREDSyntaxHighlighterManager extends TestCase {
-	public RTestREDSyntaxHighlighterManager(String name) {
+public class RTestREDBracketMatcherManager extends TestCase {
+	public RTestREDBracketMatcherManager(String name) {
 		super(name);
 	}
 	
 	public void testDefinitionManagement() {
-		assertEquals(null, REDSyntaxHighlighterManager.createHighlighter("maynotexist"));
-		REDSyntaxHighlighterDefinition def1 = new REDSyntaxHighlighterDefinition("foo");
-		REDSyntaxHighlighterManager.addDefinition(def1);
-		assertNotNull(REDSyntaxHighlighterManager.createHighlighter("foo"));
+		assertEquals(null, REDBracketMatcherManager.createMatcher("maynotexist"));
+		assertTrue(REDBracketMatcherManager.createMatcher("C++") != null);
+		assertTrue(REDBracketMatcherManager.createMatcher("Java") != null);
+		REDBracketMatcherDefinition def1 = new REDBracketMatcherDefinition();
+		def1.setName("foo");
+		REDBracketMatcherManager.addDefinition(def1);
+		assertNotNull(REDBracketMatcherManager.createMatcher("foo"));
 	}
-	
-	public void testHasHighlighter() {
-		assertEquals(true, REDSyntaxHighlighterManager.hasHighlighter("C++"));
-		assertEquals(true, REDSyntaxHighlighterManager.hasHighlighter("Java"));
-		assertEquals(false, REDSyntaxHighlighterManager.hasHighlighter("Pterodactylus--"));
-	}
-	
 		
 	public static Test suite() {
-		return new TestSuite(RTestREDSyntaxHighlighterManager.class);
+		return new TestSuite(RTestREDBracketMatcherManager.class);
 	}
 }

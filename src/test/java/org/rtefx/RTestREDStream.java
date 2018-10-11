@@ -18,8 +18,10 @@
 package org.rtefx;
 
 import java.awt.*;
+
+import org.rtefx.plugins.synhi.*;
+
 import junit.framework.*;
-import org.rtefx.plugins.synHi.*;
 
 /** Regression test for REDStream
   * @author rli@chello.at

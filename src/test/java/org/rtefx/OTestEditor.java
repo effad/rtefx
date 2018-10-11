@@ -23,8 +23,8 @@ import java.io.*;
 import javax.swing.*;
 import org.rtefx.file.*;
 import org.rtefx.plugins.*;
-import org.rtefx.plugins.brMatcher.*;
-import org.rtefx.plugins.synHi.*;
+import org.rtefx.plugins.brmatcher.*;
+import org.rtefx.plugins.synhi.*;
 import org.rtefx.util.*;
 
 /** interactive testbed for editor classes 

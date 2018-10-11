@@ -15,13 +15,15 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.brMatcher;
+package org.rtefx.plugins.brmatcher;
 
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 
 import org.rtefx.REDStyleManager;
+import org.rtefx.plugins.brmatcher.REDBracketMatcherDefinition;
+import org.rtefx.plugins.brmatcher.REDBracketMatcherDefinitionPattern;
 import org.rtefx.util.REDResourceInputStreamIterator;
 import org.rtefx.util.REDResourceManager;
 import org.rtefx.util.RTestLogObserver;

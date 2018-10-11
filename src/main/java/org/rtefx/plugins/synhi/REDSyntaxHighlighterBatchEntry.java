@@ -15,32 +15,31 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.brMatcher;
+package org.rtefx.plugins.synhi;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.rtefx.REDEditor;
+import org.rtefx.REDStyle;
 
-/** Regression test for REDBracketMatcherManager
+/** Auxiliary class which represents one entry in the operation batch produced by concurrent highlighting.
   * @author rli@chello.at
-  * @tier test
+  * @tier system
+  * @see REDSyntaxHighlighter
   */
-public class RTestREDBracketMatcherManager extends TestCase {
-	public RTestREDBracketMatcherManager(String name) {
-		super(name);
+public class REDSyntaxHighlighterBatchEntry {
+	public REDSyntaxHighlighterBatchEntry(int from, int to, REDStyle style, int changeCount) {
+		fFrom = from;
+		fTo = to;
+		fStyle = style;
+		fChangeCount = changeCount;
 	}
 	
-	public void testDefinitionManagement() {
-		assertEquals(null, REDBracketMatcherManager.createMatcher("maynotexist"));
-		assertTrue(REDBracketMatcherManager.createMatcher("C++") != null);
-		assertTrue(REDBracketMatcherManager.createMatcher("Java") != null);
-		REDBracketMatcherDefinition def1 = new REDBracketMatcherDefinition();
-		def1.setName("foo");
-		REDBracketMatcherManager.addDefinition(def1);
-		assertNotNull(REDBracketMatcherManager.createMatcher("foo"));
+	public void execute(REDEditor editor, int changeCount) {
+		if (changeCount == fChangeCount) {
+			editor.setStyle(fFrom, fTo, fStyle);
+		}
 	}
-		
-	public static Test suite() {
-		return new TestSuite(RTestREDBracketMatcherManager.class);
-	}
+	
+	int fFrom, fTo, fChangeCount;
+	REDStyle fStyle;
 }
+	

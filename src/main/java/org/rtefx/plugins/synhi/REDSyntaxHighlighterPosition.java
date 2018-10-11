@@ -15,31 +15,12 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.synHi;
+package org.rtefx.plugins.synhi;
 
-import org.rtefx.REDEditor;
-import org.rtefx.REDStyle;
-
-/** Auxiliary class which represents one entry in the operation batch produced by concurrent highlighting.
+/** Auxiliary type to allow object-derived mutable integers. 
   * @author rli@chello.at
   * @tier system
-  * @see REDSyntaxHighlighter
   */
-public class REDSyntaxHighlighterBatchEntry {
-	public REDSyntaxHighlighterBatchEntry(int from, int to, REDStyle style, int changeCount) {
-		fFrom = from;
-		fTo = to;
-		fStyle = style;
-		fChangeCount = changeCount;
-	}
-	
-	public void execute(REDEditor editor, int changeCount) {
-		if (changeCount == fChangeCount) {
-			editor.setStyle(fFrom, fTo, fStyle);
-		}
-	}
-	
-	int fFrom, fTo, fChangeCount;
-	REDStyle fStyle;
+class REDSyntaxHighlighterPosition {
+	int fPosition = 0;
 }
-	

@@ -15,14 +15,14 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.brMatcher;
+package org.rtefx.plugins.brmatcher;
 
 import java.io.InputStream;
 
 import org.rtefx.REDStyleManager;
 import org.rtefx.RTestControllerBase;
-import org.rtefx.plugins.synHi.REDSyntaxHighlighter;
-import org.rtefx.plugins.synHi.REDSyntaxHighlighterManager;
+import org.rtefx.plugins.synhi.REDSyntaxHighlighter;
+import org.rtefx.plugins.synhi.REDSyntaxHighlighterManager;
 import org.rtefx.util.REDResourceInputStreamIterator;
 import org.rtefx.util.REDResourceManager;
 

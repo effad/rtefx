@@ -15,14 +15,12 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx.plugins.brMatcher;
+package org.rtefx.plugins.synhi;
 
-/** Bracket matcher result. Auxiliary class.
-  * This class represents bracket matcher results.
+/** Auxiliary type to allow object-derived mutable integers. 
   * @author rli@chello.at
-  * @tier plugin
-  * @see REDBracketMatcher
+  * @tier system
   */
-public class REDBracketMatcherResult {
-	int fPosition, fLength;
+class REDSyntaxHighlighterState {
+	int fState = -1;
 }
