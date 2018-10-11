@@ -419,7 +419,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	/** Test themes. */
 	public void testThemes() {
 		assertEquals("Mgr default style has wrong font.", "Monospaced", fDefaultMgrStyle.getFontFace());
-		readAdditionalStyleFile("red/RTestREDTextStyles.1.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", null);
 		assertTrue(REDStyleManager.getDefaultStyle().hasTheme("Default"));
 		assertTrue(REDStyleManager.getDefaultStyle().hasTheme("RTestREDTextStylesTheme"));
 		assertTrue(!REDStyleManager.getStyle("Float").hasTheme("RTestREDTextStylesTheme"));
@@ -431,32 +431,32 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testStyleObjectIdentity() {
-		readAdditionalStyleFile("red/RTestREDTextStyles.1.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", null);
 		REDStyle before = REDStyleManager.getStyle("TestStyle1");
 		assertEquals(20, before.getFontSize());
-		readAdditionalStyleFile("red/RTestREDTextStyles.2.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.2.xml", null);
 		REDStyle after = REDStyleManager.getStyle("TestStyle1");
 		assertEquals(30, before.getFontSize());
 		assertTrue(before == after);	// intentionally don't use equals here !
 	}
 	
 	private void readAdditionalStyleFile(String filename, File backingStore) {
-		InputStream is = ClassLoader.getSystemResourceAsStream(filename);
+		InputStream is = getClass().getResourceAsStream(filename);
 		assertNotNull(is);
 		REDStyleManager.readStyleFile(is, filename, backingStore);
 	}
 	
 	public void testBackingStore() {
-		readAdditionalStyleFile("red/RTestREDTextStyles.1.xml", new File("MyBackingStore"));
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", new File("MyBackingStore"));
 		REDStyle s1 = REDStyleManager.getStyle("TestStyle1");
 		assertEquals(new File("MyBackingStore"), s1.getBackingStore("Default"));
 	}
 	
 	public void testChangingSuperStyle() {
-		readAdditionalStyleFile("red/RTestREDTextStyles.1.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", null);
 		REDStyle s = REDStyleManager.getStyle("TestStyle2");
 		assertEquals(REDStyleManager.getDefaultStyle(), s.getSuperStyle());
-		readAdditionalStyleFile("red/RTestREDTextStyles.2.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.2.xml", null);
 		assertEquals(REDStyleManager.getStyle("TestStyle1"), s.getSuperStyle());
 	}
 	
@@ -471,29 +471,23 @@ public class RTestREDTextStyles extends RTestREDText {
 		
 	public void testLogMessages() throws Exception {
 		observeLog(true);
-		readAdditionalStyleFile("red/RTestREDTextStyles.3.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.3.xml", null);
 		assertEquals(2, getLogCount());
 		observeLog(false);
 	}
 	
 	public void testReduction() throws Exception {
-		readAdditionalStyleFile("/org/rtefx/RTestREDTextStyles.1.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", null);
 		assertTrue(REDStyleManager.hasStyle("TestReduction"));
 		REDStyle s = REDStyleManager.getStyle("TestReduction");
 		assertEquals(99, s.getFontSize());
 		assertEquals("XXX", s.getDescription());
 		assertEquals("YYY", s.getDisplayName());		
-		readAdditionalStyleFile("red/RTestREDTextStyles.4.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.4.xml", null);
 		assertEquals(12, s.getFontSize());
 		assertEquals("", s.getDescription());
 		assertEquals("TestReduction", s.getDisplayName());		
 	}		
-	
-	public void testResource() {
-		InputStream is = getClass().getResourceAsStream("/org/rtefx/RTestREDTextStyles.1.xml");
-		assertNotNull(is);
-
-	}
 	
 	public void testIterator() throws Exception {
 		String lastName = null;
@@ -507,7 +501,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testDisplayName() throws Exception {
-		readAdditionalStyleFile("red/RTestREDTextStyles.4.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.4.xml", null);
 		REDStyle s = new REDStyle(Color.yellow, Color.blue, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
 		REDStyleManager.addStyle("DisplayTestStyle", s);
 		assertEquals("DisplayTestStyle", s.getDisplayName());
@@ -522,7 +516,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testDescription() throws Exception {
-		readAdditionalStyleFile("red/RTestREDTextStyles.4.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.4.xml", null);
 		REDStyle s = new REDStyle(Color.yellow, Color.blue, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
 		REDStyleManager.addStyle("DisplayTestStyle", s);
 		assertEquals("", s.getDescription());
@@ -556,7 +550,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testThemeGetAndHas() throws Exception {
-		readAdditionalStyleFile("red/RTestREDTextStyles.5.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.5.xml", null);
 		REDStyle s = REDStyleManager.getStyle("ThemesTestStyle1");
 		assertStyle(s, "Default", "Helvetica", 12, "plain", REDLining.NONE, Color.black, Color.white);
 		assertStyle(s, "TestTheme1", "Monospaced", 10, "italic", REDLining.DOUBLEUNDER, new Color(10, 10, 10), new Color(245, 245, 245));
@@ -591,7 +585,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testManagerDeepCopy() throws Exception {
-		readAdditionalStyleFile("red/RTestREDTextStyles.5.xml", null);
+		readAdditionalStyleFile("RTestREDTextStyles.5.xml", null);
 		REDStyleManagerImpl src = REDStyleManager.getInstance();
 		src.doPut("Default", "testMapping", this, false);
 		REDStyleManagerImpl cp = src.deepCopy();
@@ -687,7 +681,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testListener() {
-		readAdditionalStyleFile("red/RTestREDTextStyles.1.xml", new File("MyBackingStore"));
+		readAdditionalStyleFile("RTestREDTextStyles.1.xml", new File("MyBackingStore"));
 		Listener a = new Listener();
 		RTestLogProxy proxy = new RTestLogProxy(a);
 		proxy.addLogClass(REDStyleEventListener.class);

@@ -104,7 +104,7 @@ public class REDStyle implements REDXMLReadable {
 	public void setMappings(REDXMLHandlerReader handler) throws REDXMLCallbackError {
 		handler.mapStart("Foreground", "setForeground('Default', (int) #red, (int) #green, (int) #blue)");
 		handler.mapStart("Background", "setBackground('Default', (int) #red, (int) #green, (int) #blue)");
-		handler.mapEnd("Lining", "setLining('Default', (red.REDLining) #[red.REDLining.])");
+		handler.mapEnd("Lining", "setLining('Default', (" + REDLining.class.getName() + ") #[" + REDLining.class.getName() + ".])");
 		handler.mapEnd("Super", "setSuper('Default', #)");
 		handler.mapEnd("FontFace", "setFontFace('Default', #)");
 		handler.mapEnd("FontSize", "setFontSize('Default', (int) # = '-1')");

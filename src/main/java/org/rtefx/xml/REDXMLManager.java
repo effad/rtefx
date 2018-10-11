@@ -201,10 +201,6 @@ final public class REDXMLManager extends REDXMLHandler {
 	  */
 	public void parse(Reader r, String name) throws IOException, SAXException {
 		XMLReader xr = null;
-		// install default sax driver
-		if (System.getProperty("org.xml.sax.driver") == null) {
-			System.setProperty("org.xml.sax.driver", "org.apache.xerces.parsers.SAXParser");
-		}
 		try {
 			xr = XMLReaderFactory.createXMLReader();
 		}
