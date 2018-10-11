@@ -1,5 +1,5 @@
-//    RED - A Java Editor Library
-//    Copyright (C) 2003  Robert Lichtenberger
+//    RTEFX - Rich Text Editor for JavaFX
+//    Copyright (C) 2003, 2018  Robert Lichtenberger
 //
 //    This library is free software; you can redistribute it and/or
 //    modify it under the terms of the GNU Lesser General Public
