@@ -5,9 +5,16 @@ import javafx.scene.text.Text;
 
 public class RTELineCellSkin extends CellSkinBase<RTELineCell> {
 
+	private Text line;
+	
 	public RTELineCellSkin(RTELineCell control) {
 		super(control);
-		getChildren().add(new Text("Blubbl"));
+		line = new Text("foobar");
+		line.textProperty().bind(control.textProperty());
+		line.textProperty().addListener((prop, oldValue, newValue) -> {
+			System.out.println("Cell val:" + newValue);
+		});
+		getChildren().add(line);
 	}
 
 }

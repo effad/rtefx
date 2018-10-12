@@ -9,7 +9,6 @@ public class RTEView extends Control {
 
 	public RTEView(REDText text) {
 		this.text = text;
-		setStyle("-fx-background-color: chocolate");
 	}
 	
 	@Override
@@ -19,5 +18,11 @@ public class RTEView extends Control {
 	
 	public int getLines() {
 		return text.getNrOfLines();
+	}
+
+	public String getLine(int i) {
+		char[] lineChars = text.getLine(i, null); // TODO :: check interface into text, UTF-8?
+		String s = lineChars == null ? "" : new String(lineChars);
+		return s;	
 	}	
 }

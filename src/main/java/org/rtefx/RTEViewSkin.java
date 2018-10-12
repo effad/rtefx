@@ -15,8 +15,7 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 	}
 	
     private RTELineCell createCell() {
-    	System.out.println("Creating cell");
-    	RTELineCell cell = new RTELineCell();
+    	RTELineCell cell = new RTELineCell(getSkinnable());
         return cell;
     }
 	
@@ -29,8 +28,6 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 	@Override
 	protected void updateItemCount() {
         if (flow == null) return;
-
-
         flow.setCellCount(getItemCount());
         flow.requestLayout();
 	}
