@@ -31,7 +31,6 @@ public class RTestLogProxy implements InvocationHandler  {
 
 	/** Create a new RTestLogProxy 
 	  * @param obj The object this proxy will be connected with
-	  * @param logMethodsFrom The class whose methods this proxy will log
 	  */
 	public RTestLogProxy(Object obj) {
 		fObj = obj;

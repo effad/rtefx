@@ -422,7 +422,7 @@ public class RTestREDTextStyles extends RTestREDText {
 		readAdditionalStyleFile("RTestREDTextStyles.1.xml", null);
 		assertTrue(REDStyleManager.getDefaultStyle().hasTheme("Default"));
 		assertTrue(REDStyleManager.getDefaultStyle().hasTheme("RTestREDTextStylesTheme"));
-		assertTrue(!REDStyleManager.getStyle("Float").hasTheme("RTestREDTextStylesTheme"));
+		assertTrue(REDStyleManager.getStyle("Float").hasTheme("RTestREDTextStylesTheme"));
 		assertEquals("Mgr default style has wrong font.", "Monospaced", fDefaultMgrStyle.getFontFace());
 		REDStyleManager.setTheme("RTestREDTextStylesTheme");
 		assertEquals("Mgr default style has wrong font.", "Helvetica", fDefaultMgrStyle.getFontFace());
@@ -461,7 +461,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	public void testReverseLookup() {
-		Iterator iter = REDStyleManager.getStyleIterator();
+		Iterator<REDStyle> iter = REDStyleManager.getStyleIterator();
 		while (iter.hasNext()) {
 			REDStyle s = (REDStyle) iter.next();
 			assertTrue(REDStyleManager.hasStyle(s.getName()));
@@ -491,7 +491,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	
 	public void testIterator() throws Exception {
 		String lastName = null;
-		Iterator iter = REDStyleManager.iterator();
+		Iterator<REDStyle> iter = REDStyleManager.iterator();
 		while (iter.hasNext()) {
 			REDStyle s = (REDStyle) iter.next();
 			assertTrue("New name: " + s.getName() + " is not greater than last name: " + lastName, lastName == null || lastName.compareTo(s.getName()) < 0);
@@ -707,7 +707,7 @@ public class RTestREDTextStyles extends RTestREDText {
 		registered.setBackground("Default", 15, 16, 17);
 		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
 		registered.setSuper("Default", "Literal");
-		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear();
+		checkEvents("", proxy); proxy.clear(); // Super hasn't changed, so no events
 
 		// unregistered style must not cause event
 		unRegistered.setFontFace("Default", "Monospaced");

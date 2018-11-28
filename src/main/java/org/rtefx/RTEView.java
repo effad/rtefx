@@ -24,5 +24,5 @@ public class RTEView extends Control {
 		char[] lineChars = text.getLine(i, null); // TODO :: check interface into text, UTF-8?
 		String s = lineChars == null ? "" : new String(lineChars);
 		return s;	
-	}	
+	}		
 }

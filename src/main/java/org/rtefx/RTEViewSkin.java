@@ -12,6 +12,7 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 		flow = getVirtualFlow();
         flow.setCellFactory(flow -> createCell());
         getChildren().add(flow);
+        markItemCountDirty();
 	}
 	
     private RTELineCell createCell() {
@@ -45,7 +46,6 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 
     /** {@inheritDoc} */
     @Override protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return 400;
-    }
-	
+        return 600;
+    }    
 }

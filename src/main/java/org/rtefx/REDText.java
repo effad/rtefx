@@ -41,10 +41,10 @@ class REDText implements REDRexLineSource {
 		fScratchRider = new REDFileRider(REDFile.getUniqueTmpFile());
 		fDefaultStyle = REDStyleManager.getDefaultStyle();
 		fLineTree = new REDLineTree();
-		fListeners = new ArrayList(REDAuxiliary.fcListenerSize);
+		fListeners = new ArrayList<>(REDAuxiliary.fcListenerSize);
 		fCmdP = new REDCommandProcessor(this);	// TBD: make cmdP optional
 		fModLock = false;
-		fOpQ = new ArrayList(3);
+		fOpQ = new ArrayList<>(3);
 		fCachePos = -1;
 		fFilename = filename;
 		fStyleBatchNotification = false;
@@ -474,7 +474,7 @@ class REDText implements REDRexLineSource {
 	}
 
 	/** Get view stretch.
-	  * @param from start of stretch
+	  * @param pos start of stretch
 	  * @param stretch if this parameter != null then the passed stretch object is reused
 	  * @return a view stretch
 	  * @pre pos >= 0
@@ -928,9 +928,9 @@ class REDText implements REDRexLineSource {
 	  * StringTokenizer wont cut it: It cannot use \r\n as delimiter :-(
 	  * @post forall REDLineTreeData e in return | e.getPosition() >= from@pre && e.getPosition() <= to@pre
 	  */
-	private ArrayList tokenize(int from, int to) {
+	private ArrayList<REDLineTreeData> tokenize(int from, int to) {
 		int nrLines = 1;
-		ArrayList retVal = new ArrayList();
+		ArrayList<REDLineTreeData> retVal = new ArrayList<>();
 		REDRunSpec runSpec = null;
 		while (from < to) {
 			runSpec = findNextRun(from, runSpec);
@@ -1103,11 +1103,11 @@ class REDText implements REDRexLineSource {
 	private String fFilename;
 	private REDStyle fDefaultStyle;
 	protected REDLineTree fLineTree;	// @TBD make me private again.
-	private ArrayList fListeners;
+	private ArrayList<REDTextEventListener> fListeners;
 	private REDTextCommand fCurTypingCmd;
 	private REDView fUndoRedoView;
 	private REDCommandProcessor fCmdP;
 	private boolean fModLock;	// modification locked
-	private ArrayList fOpQ;	// operation queue
+	private ArrayList<QueueEntry> fOpQ;	// operation queue
 	private boolean fStyleBatchNotification;
 }

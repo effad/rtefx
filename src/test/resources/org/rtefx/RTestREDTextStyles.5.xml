@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- Test incomplete style: TestStyle4 has not got a font size or super style. -->
 <REDConfig>
 	<Style id="ThemesTestStyle1">
 		<FontFace>Helvetica</FontFace>

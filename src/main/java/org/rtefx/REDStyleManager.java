@@ -47,7 +47,7 @@ public class REDStyleManager {
 	/** Get iterator over all registered styles.
 	  * @return An iterator which will produce REDStyle objects.
 	  */ 	
-	static public Iterator getStyleIterator() {
+	static public Iterator<REDStyle> getStyleIterator() {
 		return fgInstance.doGetStyleIterator();
 	}
 
@@ -138,7 +138,7 @@ public class REDStyleManager {
 	/** Get iterator over styles.
 	  * @return An iterator, which will iterate over all registered styles, in alphabetical order.
 	  */
-	static public Iterator iterator() {
+	static public Iterator<REDStyle> iterator() {
 		return fgInstance.doIterator();
 	}
 

@@ -40,7 +40,7 @@ import org.rtefx.xml.REDXMLManager;
 public class REDStyleManagerImpl {
 	REDStyleManagerImpl() {
 		fNameToStyleMap = new TreeMap();
-		fDefaultStyle = new REDStyle(Color.black, Color.white, REDLining.NONE, "Monospaced", "PLAIN", 12, null);
+		fDefaultStyle = new REDStyle(Color.black, Color.white, REDLining.NONE, "Monospaced", "plain", 12, null);
 		fDefaultStyle.setName("Default");
 		fTheme = "Default";
 		fNameToStyleMap.put("Default", fDefaultStyle);
@@ -62,7 +62,7 @@ public class REDStyleManagerImpl {
 	/** Get iterator over all registered styles.
 	  * @return An iterator which will produce REDStyle objects.
 	  */ 	
-	Iterator doGetStyleIterator() {
+	Iterator<REDStyle> doGetStyleIterator() {
 		return fNameToStyleMap.values().iterator();
 	}
 
@@ -212,7 +212,7 @@ public class REDStyleManagerImpl {
 	/** Get iterator over styles.
 	  * @return An iterator, which will iterate over all registered styles, in alphabetical order.
 	  */
-	Iterator doIterator() {
+	Iterator<REDStyle> doIterator() {
 		return fNameToStyleMap.values().iterator();
 	}
 	
@@ -322,7 +322,7 @@ public class REDStyleManagerImpl {
 		send("afterStyleChange", s);
 	}
 	
-	private TreeMap fNameToStyleMap;
+	private TreeMap<String, REDStyle> fNameToStyleMap;
 	private REDStyle fDefaultStyle;
 	private String fTheme;
 	private HashSet fListeners;
