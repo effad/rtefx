@@ -3,17 +3,24 @@ package org.rtefx;
 import javafx.scene.Cursor;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
+import java.awt.FontMetrics;
 
 public class RTEView extends Control {
 	
 	private REDText text;
 	private int cursorPos = 0;
+	private Text caret = new Text("|");
+	private Pane caretPane = null;
 
 	public RTEView(REDText text) {
 		this.text = text;
 		setCursor(Cursor.TEXT);
+		setOnMouseClicked(this::mouseClicked);
 	}
 	
 	@Override
@@ -31,7 +38,8 @@ public class RTEView extends Control {
 		return s;	
 	}		
 	
-	public void fillLineFlow(int i, TextFlow flow) {
+	public void fillLineFlow(int i, TextFlow flow, Pane overlay) {
+		double viewOffset = 0;
 		flow.getChildren().clear();
 		REDViewStretch stretch = new REDViewStretch();
 		int pos = text.getLineStart(i);
@@ -43,8 +51,26 @@ public class RTEView extends Control {
 			Text t = new Text(str);
 			t.setFont(stretch.fStyle.getFont());
 			flow.getChildren().add(t);
+			if (cursorPos >= pos && cursorPos < pos + stretch.fLength) {
+				Text part = new Text(str.substring(0, cursorPos-pos));
+				part.setFont(t.getFont());
+				part.applyCss();
+				caret.setX(viewOffset + part.getLayoutBounds().getMaxX());
+				caret.setY(part.getLayoutBounds().getMaxY() + part.getLayoutBounds().getHeight());
+				if (caretPane != null) {
+					caretPane.getChildren().remove(caret);
+				}
+				overlay.getChildren().add(caret);
+				caretPane = overlay;
+				System.out.println("Cursor in line " + i + " at char: " + (cursorPos - pos));
+			}
+			viewOffset += t.getLayoutBounds().getWidth();
 			pos += stretch.fLength;
 			text.getViewStretch(pos, stretch);
 		}
 	}
+
+	private void mouseClicked(MouseEvent e) {
+		cursorPos ++;
+	}	
 }

@@ -2,7 +2,6 @@ package org.rtefx;
 
 import javafx.scene.control.skin.VirtualContainerBase;
 import javafx.scene.control.skin.VirtualFlow;
-import javafx.scene.layout.StackPane;
 
 public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 
@@ -48,5 +47,5 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
     /** {@inheritDoc} */
     @Override protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
         return 600;
-    }    
+    }        
 }

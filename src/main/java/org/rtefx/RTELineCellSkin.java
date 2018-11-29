@@ -11,7 +11,7 @@ public class RTELineCellSkin extends CellSkinBase<RTELineCell> {
 		super(control);
 		line = new Text();
 		line.textProperty().bind(control.itemProperty().asString());
-		getChildren().add(control.getLineFlow());
+		getChildren().addAll(control.getLineFlow(), control.getOverlay());
 	}
 
 }
