@@ -2,10 +2,12 @@ package org.rtefx;
 
 import javafx.scene.control.IndexedCell;
 import javafx.scene.control.Skin;
+import javafx.scene.text.TextFlow;
 
 public class RTELineCell extends IndexedCell<String> {
 	
-	RTEView view;
+	private RTEView view;	
+	private TextFlow lineFlow = new TextFlow();
 	
     public RTELineCell(RTEView view) {
     	this.view = view; 
@@ -20,8 +22,12 @@ public class RTELineCell extends IndexedCell<String> {
     
     @Override
     public void updateIndex(int i) {
+    	view.fillLineFlow(i, lineFlow);
     	setItem(view.getLine(i));
     	super.updateIndex(i);
     }
     
+    public TextFlow getLineFlow() {
+		return lineFlow;
+	}
 }

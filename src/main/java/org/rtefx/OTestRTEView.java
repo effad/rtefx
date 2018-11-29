@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.Color;
+
 public class OTestRTEView extends Application {
 	
     @Override
@@ -15,6 +17,7 @@ public class OTestRTEView extends Application {
  
         REDText text = new REDText("/home/rli/test.txt");
         RTEView view = new RTEView(text);
+        text.setStyle(5,  10, new REDStyle(Color.BLACK, Color.WHITE, REDLining.DOUBLETHROUGH, "Helvetica", "plain", 22, null));
 
         ((VBox) scene.getRoot()).getChildren().addAll(view);
  
