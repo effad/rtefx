@@ -20,6 +20,7 @@ package org.rtefx.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -27,8 +28,8 @@ import java.util.Iterator;
   * @author rli@chello.at
   * @tier system
   */
-public class REDResourceInputStreamIterator implements Iterator {
-	REDResourceInputStreamIterator(ArrayList list) {
+public class REDResourceInputStreamIterator implements Iterator<InputStream> {
+	REDResourceInputStreamIterator(ArrayList<Object> list) {
 		fIter = list.iterator();
 	}
 	
@@ -36,7 +37,7 @@ public class REDResourceInputStreamIterator implements Iterator {
 		return fIter.hasNext();
 	}
 	
-	public Object next() {
+	public InputStream next() {
 		fObj = fIter.next();
 		if (fObj instanceof File) {
 			try {
@@ -68,6 +69,6 @@ public class REDResourceInputStreamIterator implements Iterator {
 		throw new UnsupportedOperationException();
 	}
 	
-	Iterator fIter;
-	Object fObj;
+	private Iterator<Object> fIter;
+	private Object fObj;
 }

@@ -53,10 +53,10 @@ class REDRexStringFinder {
 		curState.fMatch = true;
 	}
 	
-	Iterator getMatches(char haystack[], int haystackLength) {
+	Iterator<REDRexStringFinderMatch> getMatches(char haystack[], int haystackLength) {
 		State curState = fDefaultState;
 		int length = 0;
-		ArrayList matches = new ArrayList();
+		ArrayList<REDRexStringFinderMatch> matches = new ArrayList<>();
 		for (int x = 0; x < haystackLength; x++) {
 			char c = haystack[x];
 			int idx = curState.fValidInput.indexOf(c);
@@ -88,7 +88,7 @@ class REDRexStringFinder {
 	
 	class State {
 		String fValidInput = "";
-		Vector fStates = new Vector();
+		Vector<State> fStates = new Vector<>();
 		boolean fMatch;
 	}
 	

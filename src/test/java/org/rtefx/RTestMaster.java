@@ -24,6 +24,7 @@ import org.rtefx.plugins.*;
 import org.rtefx.plugins.brmatcher.*;
 import org.rtefx.plugins.synhi.*;
 import org.rtefx.rexparser.*;
+import org.rtefx.styleeditor.RTestREDStyleEditor;
 import org.rtefx.util.*;
 import org.rtefx.xml.*;
 	

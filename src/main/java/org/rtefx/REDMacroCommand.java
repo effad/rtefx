@@ -28,26 +28,26 @@ import java.util.Iterator;
 class REDMacroCommand extends REDCommand {
 	public REDMacroCommand(String description) {
 		super(description);
-		fCommands = new ArrayList();
+		fCommands = new ArrayList<>();
 	}
 	
 	public void doIt() {
-		Iterator iter = fCommands.iterator();
+		Iterator<REDCommand> iter = fCommands.iterator();
 		while (iter.hasNext()) {
-			((REDCommand) iter.next()).doIt();
+			iter.next().doIt();
 		}
 	}
 	
 	public void undoIt() {
 		for (int x = fCommands.size() - 1; x >= 0; x--) {
-			((REDCommand) fCommands.get(x)).undoIt();
+			fCommands.get(x).undoIt();
 		}
 	}
 	
 	public void redoIt() {
-		Iterator iter = fCommands.iterator();
+		Iterator<REDCommand> iter = fCommands.iterator();
 		while (iter.hasNext()) {
-			((REDCommand) iter.next()).redoIt();
+			iter.next().redoIt();
 		}
 	}
 	
@@ -58,5 +58,5 @@ class REDMacroCommand extends REDCommand {
 		fCommands.add(cmd);
 	}
 	
-	ArrayList fCommands;
+	ArrayList<REDCommand> fCommands;
 }

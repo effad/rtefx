@@ -164,7 +164,7 @@ public class REDStyleManager {
 	/** Get singleton instance.
 	  * @return The REDStyleManagerImpl instance used for calls to static members of REDStyleManager.
 	 */	
-	static REDStyleManagerImpl getInstance() {
+	public static REDStyleManagerImpl getInstance() {
 		return fgInstance;
 	}
 	

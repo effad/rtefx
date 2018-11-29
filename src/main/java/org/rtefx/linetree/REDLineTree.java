@@ -31,11 +31,11 @@ public class REDLineTree extends REDDistanceTree {
 		super(new REDLineTreeFactory());
 	}
 	
-	private	void insertBalanced(int lb, int ub, ArrayList v, int lineOffset, REDLineTreeData nullData) {
+	private	void insertBalanced(int lb, int ub, ArrayList<REDLineTreeData> v, int lineOffset, REDLineTreeData nullData) {
 		int i;
 		if (lb >= ub) return;
 		i = (lb + ub) / 2;
-		REDLineTreeData data = (REDLineTreeData) v.get(i); data.fLine += lineOffset;
+		REDLineTreeData data = v.get(i); data.fLine += lineOffset;
 		fRoot.insertNew(data, nullData, REDLineTreeData.fgPositionComparison, fFactory);
 		nullData.fPosition = 0; nullData.fLine = 0;
 		insertBalanced(i+1, ub, v, lineOffset, nullData);
@@ -48,7 +48,7 @@ public class REDLineTree extends REDDistanceTree {
 	 * @param v This vector contains an REDLineTreeData element for the distance of each line to its predecessor, starting with line nr. 1; may be null
 	 * @pre v.size() > 0
 	 */
-	public void notifyInsert(int pos, int totalLength, ArrayList v) {
+	public void notifyInsert(int pos, int totalLength, ArrayList<REDLineTreeData> v) {
 		int size = (v == null) ? 0 : v.size() - 1;
 		REDLineTreeData data = new REDLineTreeData(totalLength, size);
 		REDLineTreeData start = (REDLineTreeData) modifyEdgesAfterInsertion(new REDLineTreeData(pos, 0), REDLineTreeData.fgPositionComparison, data);

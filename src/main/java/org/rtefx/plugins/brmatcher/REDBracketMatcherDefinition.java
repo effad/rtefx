@@ -39,7 +39,7 @@ public class REDBracketMatcherDefinition implements REDXMLReadable {
 		fMaxLines = Integer.MAX_VALUE;
 		fMaxChars = Integer.MAX_VALUE;
 		fStyle = REDStyleManager.getStyle("BracketMatcher");
-		fPatterns = new ArrayList();
+		fPatterns = new ArrayList<REDBracketMatcherDefinitionPattern>();
 	}
 	
 	public void setMappings(REDXMLHandlerReader handler) throws REDXMLCallbackError {
@@ -117,10 +117,10 @@ public class REDBracketMatcherDefinition implements REDXMLReadable {
 	  */
 	public REDBracketMatcherResult findMatch(REDEditor editor, int pos, boolean forDoubleClick, REDBracketMatcherResult result) {
 		int retVal = -1;
-		Iterator iter = fPatterns.iterator();
+		Iterator<REDBracketMatcherDefinitionPattern> iter = fPatterns.iterator();
 		REDBracketMatcherDefinitionPattern pat = null;
 		while (iter.hasNext() && retVal == -1) {
-			pat = (REDBracketMatcherDefinitionPattern) iter.next();
+			pat = iter.next();
 			retVal = pat.findMatch(editor, pos, forDoubleClick);
 		}
 		if (retVal != -1) {
@@ -144,7 +144,7 @@ public class REDBracketMatcherDefinition implements REDXMLReadable {
 	/** Get iterator over patterns. 
 	  * @return An iterator which gives REDBracketMatcherDefinitionPattern objects.
 	  */
-	Iterator patternIterator() {
+	Iterator<REDBracketMatcherDefinitionPattern> patternIterator() {
 		return fPatterns.iterator();
 	}
 	
@@ -161,6 +161,6 @@ public class REDBracketMatcherDefinition implements REDXMLReadable {
 	/** The style to highlight matches with. */
 	REDStyle fStyle;
 	/** The patterns to try and match. */
-	ArrayList fPatterns;	// array of REDBracketMatcherDefinitionPattern
+	ArrayList<REDBracketMatcherDefinitionPattern> fPatterns;	// array of REDBracketMatcherDefinitionPattern
 }
 	

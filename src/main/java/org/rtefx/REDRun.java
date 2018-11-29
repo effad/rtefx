@@ -81,7 +81,6 @@ final class REDRun {
 	  * @return the number of bytes read
 	  */
 	public int copyInto(byte[] arr, int from, int arrSize, int myOff) {
-		int retVal = 0;
 		fBuffer.seek(fOrg + myOff);
 		int readAmount = Math.min(arrSize - from, fLength - myOff);
 		fBuffer.readBytes(arr, from, readAmount);

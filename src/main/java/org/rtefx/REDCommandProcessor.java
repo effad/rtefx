@@ -237,12 +237,12 @@ class REDCommandProcessor {
 	/** The freezepoint change index. */
 	int fCheckPoint;
 	/** The registered listeners. */
-	ArrayList fListeners;
+	ArrayList<REDCommandProcessorEventListener> fListeners;
 	/** The text that is associated with this processor. */
 	REDText fText;
 	/** Auxiliary variable to be able to report state transitions from "modified" to "not modified" and vice versa. */
 	boolean fLastState;
 	{
-		fListeners = new ArrayList(REDAuxiliary.fcListenerSize);
+		fListeners = new ArrayList<>(REDAuxiliary.fcListenerSize);
 	}
 }

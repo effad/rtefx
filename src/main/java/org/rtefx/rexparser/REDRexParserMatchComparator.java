@@ -24,7 +24,7 @@ import java.util.Comparator;
   * @author rli@chello.at
   * @tier system
   */
-class REDRexParserMatchComparator implements Comparator {
+class REDRexParserMatchComparator implements Comparator<REDRexParserMatch> {
 	REDRexParserMatchComparator(boolean reverse) {
 		if (reverse) {
 			fFactor = -1;
@@ -34,12 +34,13 @@ class REDRexParserMatchComparator implements Comparator {
 		}
 	}
 
-	public int compare(Object o1, Object o2) {
-		return ((REDRexParserMatch) o1).compareTo(o2) * fFactor;
+	public int compare(REDRexParserMatch o1, REDRexParserMatch o2) {
+		return o1.compareTo(o2) * fFactor;
 	}
 	
 	public boolean equals(Object o) {
 		return super.equals(o);
 	}
-	int fFactor;
+	
+	private int fFactor;
 }

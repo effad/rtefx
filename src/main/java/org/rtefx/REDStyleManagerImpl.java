@@ -51,7 +51,7 @@ public class REDStyleManagerImpl {
 	  * @param name The name of the style to get.
 	  * @return The style stored under the given name, or the default style, if no style is stored under the given name.
 	  */
-	REDStyle doGetStyle(String name) {
+	public REDStyle doGetStyle(String name) {
 		REDStyle retVal = (REDStyle) fNameToStyleMap.get(name);
 		if (retVal == null) {
 			retVal = fDefaultStyle;
@@ -69,7 +69,7 @@ public class REDStyleManagerImpl {
 	/** Get default style.
 	  * @return The default style.
 	  */
-	REDStyle doGetDefaultStyle() {
+	public REDStyle doGetDefaultStyle() {
 		return fDefaultStyle;
 	}
 	
@@ -77,7 +77,7 @@ public class REDStyleManagerImpl {
 	  * @param name The name of the style to check.
 	  * @return <Code>true</Code>, if a style is stored under the given name, <Code>false</Code> otherwise.
 	  */
-	boolean doHasStyle(String name) {
+	public boolean doHasStyle(String name) {
 		return fNameToStyleMap.get(name) != null;
 	}
 	
@@ -170,7 +170,7 @@ public class REDStyleManagerImpl {
 	/** Install theme. 
 	  * @param theme The name of the theme to be installed. Theme names are case sensitive.
 	  */
-	void doSetTheme(String theme) {
+	public void doSetTheme(String theme) {
 		send("beforeThemeChange", fTheme, theme);
 		String oldTheme = fTheme;
 		fTheme = theme;
@@ -212,12 +212,12 @@ public class REDStyleManagerImpl {
 	/** Get iterator over styles.
 	  * @return An iterator, which will iterate over all registered styles, in alphabetical order.
 	  */
-	Iterator<REDStyle> doIterator() {
+	public Iterator<REDStyle> doIterator() {
 		return fNameToStyleMap.values().iterator();
 	}
 	
 	/** Create a deep copy (new REDStyle instances). */
-	REDStyleManagerImpl deepCopy() {
+	public REDStyleManagerImpl deepCopy() {
 		REDStyleManagerImpl manager = new REDStyleManagerImpl();
 		HashMap map = new HashMap();
 		Iterator iter = fNameToStyleMap.keySet().iterator();

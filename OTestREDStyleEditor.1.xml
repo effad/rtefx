@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<REDConfig>
+	<Style id="Default">
+		<FontFace>Nimbus Roman</FontFace>
+		<FontSize>12</FontSize>
+		<FontStyle>plain</FontStyle>
+		<Lining>none</Lining>
+		<Foreground red="0" green="0" blue="0"/>
+		<Background red="255" green="255" blue="255"/>
+	</Style>
+</REDConfig>

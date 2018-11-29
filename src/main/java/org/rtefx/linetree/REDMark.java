@@ -48,7 +48,7 @@ public class REDMark extends REDNode {
 		return retVal;
 	}
 	
-	void collect(int myPos, ArrayList collection, int from, int to, Class cl, boolean excludeMyself) {
+	void collect(int myPos, ArrayList<REDMark> collection, int from, int to, Class<?> cl, boolean excludeMyself) {
 		if (myPos >= from && fLeft != null) {
 			((REDMark) fLeft.fSon).collect(myPos - ((REDMarkTreeData) fLeft.fData).fPosition, collection, from, to, cl, false);
 		}
@@ -62,7 +62,7 @@ public class REDMark extends REDNode {
 		}
 	}
 	
-	REDMark find(int myPos, int pos, boolean left, Class cl, boolean excludeMyself) {
+	REDMark find(int myPos, int pos, boolean left, Class<?> cl, boolean excludeMyself) {
 		REDMark retVal = null;
 		
 		if (left) {

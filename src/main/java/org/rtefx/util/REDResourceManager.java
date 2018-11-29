@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /** Resource management utility class. Singleton pattern with convenience methods.
@@ -49,8 +50,8 @@ public class REDResourceManager {
     private REDResourceInputStreamIterator doGetInputStreams(String resourcePath, String fileSuffix) {
 		REDTracer.info("red.util", "REDResourceManager", "Getting input streams for: " + resourcePath + " and " + fileSuffix);
 		ResourceFileFilter filter = new ResourceFileFilter(fileSuffix);
-		ArrayList list = new ArrayList();
-		Enumeration e = null;
+		ArrayList<Object> list = new ArrayList<>();
+		Enumeration<URL> e = null;
 		try {
 			e = getClass().getClassLoader().getResources(resourcePath);
 		}
@@ -75,7 +76,7 @@ public class REDResourceManager {
 					if (connection instanceof JarURLConnection) {
 						JarURLConnection juc = (JarURLConnection) connection;
 						JarFile jarFile = juc.getJarFile();
-						Enumeration e2 = jarFile.entries();
+						Enumeration<JarEntry> e2 = jarFile.entries();
 						while (e2.hasMoreElements()) {
 							String fName = "" + e2.nextElement();
 							if (fName.startsWith(resourcePath) && fName.endsWith(fileSuffix)) {

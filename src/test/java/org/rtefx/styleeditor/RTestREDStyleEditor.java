@@ -15,7 +15,7 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx;
+package org.rtefx.styleeditor;
 
 import junit.framework.*;
 import java.awt.*;
@@ -23,6 +23,13 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.tree.*;
+
+import org.rtefx.REDLining;
+import org.rtefx.REDStyle;
+import org.rtefx.REDStyleManager;
+import org.rtefx.RTestLogProxy;
+import org.rtefx.styleeditor.REDStyleEditor;
+import org.rtefx.styleeditor.REDStyleEditorSelectionListener;
 import org.rtefx.util.*;
 
 /** JUnit test class for REDStyleEditor, the GUI editor for styles.

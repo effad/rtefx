@@ -63,9 +63,9 @@ public class REDMarkTree extends REDDistanceTree implements REDTextEventListener
 	  * @param reuse If this parameter is non-null, the passed ArrayList is reused. This can be used to increase performance. Existing elements in reuse are not removed!
 	  * @return A ArrayList containing 0 to n REDMark objects.
 	  */
-	public ArrayList collectMarks(int from, int to, Class cl, ArrayList reuse) {
+	public ArrayList<REDMark> collectMarks(int from, int to, Class<?> cl, ArrayList<REDMark> reuse) {
 		if (reuse == null) {
-			reuse = new ArrayList();
+			reuse = new ArrayList<>();
 		}
 		getRoot().collect(0, reuse, from, to, cl, true);
 		return reuse;
@@ -78,7 +78,7 @@ public class REDMarkTree extends REDDistanceTree implements REDTextEventListener
 	  * @param cl If this parameter is non-null, only those marks are considered whose value is an instanceof cl.
 	  * @return The REDMark object closest to pos or null, if no such mark exists.
 	  */
-	public REDMark findMark(int pos, boolean left, Class cl) {
+	public REDMark findMark(int pos, boolean left, Class<?> cl) {
 		return getRoot().find(0, pos, left, cl, true);
 	}
 	
@@ -103,7 +103,7 @@ public class REDMarkTree extends REDDistanceTree implements REDTextEventListener
 	public void afterDelete(int from, int to) {
 		fRoot.moveDeleted(fFactory.createEdgeData(), new REDMarkTreeData(from), new REDMarkTreeData(to), REDMarkTreeData.fgComparison, fFactory);
 		REDEdgeData data = new REDMarkTreeData(from - to);
-		REDEdgeData start = modifyEdgesAfterInsertion(new REDMarkTreeData(from), REDMarkTreeData.fgComparison, data);
+		modifyEdgesAfterInsertion(new REDMarkTreeData(from), REDMarkTreeData.fgComparison, data);
 	}
 	
 	public void beforeInsert(int from, int to) {}

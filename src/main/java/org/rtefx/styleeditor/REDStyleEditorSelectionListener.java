@@ -15,7 +15,9 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx;
+package org.rtefx.styleeditor;
+
+import org.rtefx.REDStyle;
 
 /** Listener interface for selection events in the hierarchy tree of REDStyleEditor
   * @author rli@chello.at

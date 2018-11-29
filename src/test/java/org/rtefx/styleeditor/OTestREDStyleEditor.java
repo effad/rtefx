@@ -15,12 +15,16 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx;
+package org.rtefx.styleeditor;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+
+import org.rtefx.REDStyle;
+import org.rtefx.styleeditor.REDStyleEditor;
+import org.rtefx.styleeditor.REDStyleEditorSelectionListener;
 
 /** interactive testbed for editor classes 
   * @author rli@chello.at

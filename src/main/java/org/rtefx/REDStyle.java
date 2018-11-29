@@ -60,8 +60,8 @@ public class REDStyle implements REDXMLReadable {
 	public REDStyle(Color foreground, Color background, REDLining lining, String fontFace, String fontStyle, int fontSize, REDStyle superStyle) {
 		fName = "";
 		fManager = REDStyleManager.fgDevNull;
-		fMappings = new HashMap();
-		fThemes = new TreeMap();
+		fMappings = new HashMap<>();
+		fThemes = new TreeMap<>();
 		fCurTheme = getOrCreateThemeEntry("Default");
 		fCurTheme.fForeground = foreground; 
 		fCurTheme.fBackground = background;
@@ -81,9 +81,9 @@ public class REDStyle implements REDXMLReadable {
 	
 	REDStyle copy() {
 		REDStyle s = new REDStyle();
-		Iterator iter = fThemes.keySet().iterator();
+		Iterator<String> iter = fThemes.keySet().iterator();
 		while (iter.hasNext()) {
-			String name = "" + iter.next();
+			String name = iter.next();
 			ThemeEntry e = getThemeEntry(name);
 			ThemeEntry eCopy = e.copy();
 			s.fThemes.put(name, eCopy);
@@ -267,7 +267,7 @@ public class REDStyle implements REDXMLReadable {
 	
 	
 	private ThemeEntry getOrCreateThemeEntry(String theme) {
-		ThemeEntry e = (ThemeEntry) fThemes.get(theme);
+		ThemeEntry e = fThemes.get(theme);
 		if (e == null) {
 			if (theme.equals("Default")) {
 				e = new ThemeEntry();
@@ -281,15 +281,15 @@ public class REDStyle implements REDXMLReadable {
 	}
 	
 	private ThemeEntry getThemeEntrySafe(String theme) {
-		ThemeEntry e = (ThemeEntry) fThemes.get(theme);
+		ThemeEntry e = fThemes.get(theme);
 		if (e == null) {
-			e = (ThemeEntry) fThemes.get("Default");
+			e = fThemes.get("Default");
 		}
 		return e;
 	}
 	
 	private ThemeEntry getThemeEntry(String theme) {
-		return (ThemeEntry) fThemes.get(theme);
+		return fThemes.get(theme);
 	}
 	
 
@@ -304,7 +304,7 @@ public class REDStyle implements REDXMLReadable {
 		e.fSuper = source.fSuper;
 	}
 	
-	void installTheme(String theme) {
+	public void installTheme(String theme) {
 		fCurTheme = getThemeEntrySafe(theme);		
 	}
 	
@@ -514,7 +514,7 @@ public class REDStyle implements REDXMLReadable {
 	/** Get superstyle. 
 	  * @return The superstyle of this style or <Code>null</Code> if this style has no superstyle.
 	  */
-	REDStyle getSuperStyle() {
+	public REDStyle getSuperStyle() {
 		return fCurTheme.fSuper;
 	}
 	
@@ -523,12 +523,12 @@ public class REDStyle implements REDXMLReadable {
 	  * setting the super style to the found value.
 	  * @param map A map containing oldStyle => newStyle mappings.
 	  */
-	void fixupSuperstyle(HashMap map) {
-		Iterator iter = fThemes.values().iterator();
+	void fixupSuperstyle(HashMap<REDStyle, REDStyle> map) {
+		Iterator<ThemeEntry> iter = fThemes.values().iterator();
 		while (iter.hasNext()) {
-			ThemeEntry e = (ThemeEntry) iter.next();
+			ThemeEntry e = iter.next();
 			if (e.fSuper != null) {
-				REDStyle newSuper = (REDStyle) map.get(e.fSuper);
+				REDStyle newSuper = map.get(e.fSuper);
 				if (newSuper != null) {
 					e.fSuper = newSuper;
 					e.fFontCache = null;
@@ -612,7 +612,7 @@ public class REDStyle implements REDXMLReadable {
 	/** Iterate alphabetically over defined theme names.
 	  * @return An iterator which will return String objects in ascending order, representing the defined themes of this style.
 	  */
-	public Iterator themeIterator() {
+	public Iterator<String> themeIterator() {
 		return fThemes.keySet().iterator();
 	}
 	
@@ -653,7 +653,7 @@ public class REDStyle implements REDXMLReadable {
 		}
 	}
 	
-	void writeTheme(String theme, REDXMLHandlerWriter handler) throws IOException {
+	public void writeTheme(String theme, REDXMLHandlerWriter handler) throws IOException {
 		ThemeEntry e = (ThemeEntry) getThemeEntry(theme);
 		if (theme.equals("Default")) {
 			handler.openTag("Style", "id=\"" + getName() + "\"");
@@ -682,7 +682,7 @@ public class REDStyle implements REDXMLReadable {
 		fManager = manager;
 	}
 	
-	boolean equalsTheme(String theme, REDStyle that) {
+	public boolean equalsTheme(String theme, REDStyle that) {
 		ThemeEntry thisTheme = getThemeEntry(theme);
 		ThemeEntry thatTheme = that.getThemeEntry(theme);
 		return thisTheme != null && thatTheme != null && thisTheme.equalsEntry(thatTheme);
@@ -724,9 +724,9 @@ public class REDStyle implements REDXMLReadable {
 		}
 	}		
 
-	private TreeMap fThemes;
+	private TreeMap<String, ThemeEntry> fThemes;
 	private ThemeEntry fCurTheme;
-	private HashMap fMappings;	
+	private HashMap<Object, Object> fMappings;	
 	private String fName, fDisplayName, fDescription;
 	private REDStyleManagerImpl fManager;
 }

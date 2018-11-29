@@ -48,9 +48,9 @@ public class REDEditor {
 		fText = REDTextServer.acquireText(filename, privateCopy);
 		fView = new REDView(fText);
  		setController(new REDViewController());
-		fListeners = new ArrayList(REDAuxiliary.fcListenerSize);
+		fListeners = new ArrayList<>(REDAuxiliary.fcListenerSize);
 		fPluginQ = null;
-		fPlugins = new ArrayList();
+		fPlugins = new ArrayList<>();
 		fMacroCmd = null;
 	}
 	
@@ -69,7 +69,7 @@ public class REDEditor {
 	  */
 	public void close() {
 		for (int x = fListeners.size()-1; x >= 0; x--) {
-			removeREDEventListener((REDEventListener) fListeners.get(x));
+			removeREDEventListener(fListeners.get(x));
 		}
 		REDTextServer.releaseText(fText);
 		fText = null;
@@ -840,9 +840,9 @@ public class REDEditor {
 	}
 
 	private void doLoad(String filename, boolean privateCopy) {
-		Iterator iter = fListeners.iterator();
+		Iterator<REDEventListener> iter = fListeners.iterator();
 		while (iter.hasNext()) {
-			REDEventListener l = (REDEventListener) iter.next();
+			REDEventListener l = iter.next();
 			fText.removeREDTextEventListener(l);
 			fText.getCommandProcessor().removeREDCommandProcessorEventListener(l);
 			fView.removeREDViewEventListener(l);
@@ -851,7 +851,7 @@ public class REDEditor {
 		fText = REDTextServer.acquireText(filename, privateCopy);
 		iter = fListeners.iterator();
 		while (iter.hasNext()) {
-			REDEventListener l = (REDEventListener) iter.next();
+			REDEventListener l = iter.next();
 			fText.addREDTextEventListener(l);
 			fText.getCommandProcessor().addREDCommandProcessorEventListener(l);
 			fView.addREDViewEventListener(l);
@@ -954,12 +954,12 @@ public class REDEditor {
 	// --- Plugins ---
 	private void usePluginQ(boolean useIt) {
 		if (useIt) {
-			fPluginQ = new ArrayList();
+			fPluginQ = new ArrayList<>();
 		}
 		else {
-			Iterator iter = fPluginQ.iterator();
+			Iterator<REDPlugin> iter = fPluginQ.iterator();
 			while (iter.hasNext()) {
-				doAddPlugin((REDPlugin) iter.next());
+				doAddPlugin(iter.next());
 			}
 			fPluginQ = null;
 		}
@@ -1033,43 +1033,11 @@ public class REDEditor {
 		return fText.hasStyleBatchNotification();
 	}
 
-
-// Printing delayed RLI 26 Feb 2001	
-//	// --- printing 
-//	public boolean printWithDialog() {
-//		PrinterJob printerJob = PrinterJob.getPrinterJob();
-//		PageFormat pageFormat = printerJob.defaultPage();
-//		printerJob.setPrintable(fView, pageFormat);
-//
-//		if (printerJob.printDialog()) {
-//			try {
-//				printerJob.print();
-//			} 
-//			catch (PrinterException pe) {
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	public boolean print() {
-//		PrinterJob printerJob = PrinterJob.getPrinterJob();
-//		PageFormat pageFormat = printerJob.defaultPage();
-//		printerJob.setPrintable(fView, pageFormat);
-//		try {
-//			printerJob.print();
-//		}
-//		catch (PrinterException pe) {
-//			return false;
-//		}
-//		return true;
-//	}
-
 	private REDText fText;
 	private REDView fView;
 	private REDViewController fController;
-	private ArrayList fListeners;
-	private ArrayList fPluginQ;
-	private ArrayList fPlugins;
+	private ArrayList<REDEventListener> fListeners;
+	private ArrayList<REDPlugin> fPluginQ;
+	private ArrayList<REDPlugin> fPlugins;
 	private REDMacroCommand fMacroCmd;
 }

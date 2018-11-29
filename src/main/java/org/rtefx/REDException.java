@@ -22,6 +22,8 @@ package org.rtefx;
   * @tier API
   */
 public class REDException  extends Exception {
+	private static final long serialVersionUID = 1L;
+
 	public REDException() {
 		super("unknown error condition");
 	}

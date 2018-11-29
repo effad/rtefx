@@ -42,13 +42,7 @@ class REDTextCommand extends REDCommand {
 		fIsUndoRedo = true;
 		doIt();
 		if (v != null) {
-			// if (v.getColumnSelectionMode()) {		// TBD
-			if (false) {
-				v.setSelection(fFrom, fFrom);
-			}
-			else {
-				v.setSelection(fFrom, fFrom + fLength);
-			}
+			v.setSelection(fFrom, fFrom + fLength);
 		}
 		fText.setUndoRedoView(null);
 		fText.setCurTypingCommand(null);
@@ -99,7 +93,6 @@ class REDTextCommand extends REDCommand {
 	  * @pre fFrom < fText.length()
 	  */
 	public void delete() {
-		int pos = fReplacedText.length();
 		fReplacedText = fReplacedText + fText.asString(fFrom, fView.charRight(fFrom));
 	}
 	

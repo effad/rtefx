@@ -15,7 +15,7 @@
 //    License along with this library; if not, write to the Free Software
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
-package org.rtefx;
+package org.rtefx.styleeditor;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,6 +56,13 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.rtefx.REDAuxiliary;
+import org.rtefx.REDEditor;
+import org.rtefx.REDLining;
+import org.rtefx.REDStyle;
+import org.rtefx.REDStyleManager;
+import org.rtefx.REDStyleManagerImpl;
+import org.rtefx.REDView;
 import org.rtefx.xml.REDXMLHandlerWriter;
 
 /** REDStyle editor is a GUI for editing styles, themes and the style hierarchy
@@ -663,6 +670,6 @@ public class REDStyleEditor implements TreeSelectionListener, REDStyleEditorSele
 		
 	static final Object[] fgFontSizes = {"6", "7", "8", "9", "10", "11", "12", "13", "14", "16", "20", "24", "32", "40", "50", "60"};
 	static final Object[] fgFontStyles = {"plain", "bold", "italic", "bolditalic"};
-	static final ImageIcon fgExpandedIcon = new ImageIcon(ClassLoader.getSystemResource("config/icons/tree_expanded.png"));
-	static final ImageIcon fgCollapsedIcon = new ImageIcon(ClassLoader.getSystemResource("config/icons/tree_collapsed.png"));	
+	static final ImageIcon fgExpandedIcon = new ImageIcon();
+	static final ImageIcon fgCollapsedIcon = new ImageIcon();	
 }

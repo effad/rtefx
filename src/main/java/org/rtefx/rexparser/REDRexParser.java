@@ -20,6 +20,8 @@ package org.rtefx.rexparser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -36,9 +38,9 @@ public class REDRexParser {
 	public REDRexParser() {
 		fNextState = 1;
 		fNextActionId = 0;
-		fRules = new ArrayList();
+		fRules = new ArrayList<>();
 		fBuffer = null;
-		fProperties = new HashMap();
+		fProperties = new HashMap<>();
 	}
 	
 	/** Add rule to parser.
@@ -128,9 +130,9 @@ public class REDRexParser {
 		Pattern p;
 		SortedSet matches = new TreeSet(new REDRexParserMatchComparator(reverse));
 
-		Iterator iter = fRules.iterator();
+		Iterator<REDRexParserRule> iter = fRules.iterator();
 		while (iter.hasNext()) {
-			rule = (REDRexParserRule) iter.next(); 
+			rule = iter.next(); 
 			if (rule.fFinder != null) {	// dont do regexp do fast string search
 				Iterator miter = rule.fFinder.getMatches(fBuffer, src.getLineLength(line));	
 				while (miter.hasNext()) {
@@ -215,8 +217,8 @@ public class REDRexParser {
 		return fProperties.get(key);
 	}
 	
-	int fNextState, fNextActionId;
-	ArrayList fRules;
-	char [] fBuffer;
-	HashMap fProperties;
+	private int fNextState, fNextActionId;
+	private List<REDRexParserRule> fRules;
+	private char [] fBuffer;
+	private Map<Object, Object> fProperties;
 }

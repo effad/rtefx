@@ -38,7 +38,7 @@ public class REDTextServer {
 		}
 
 		REDText text = null;
-		REDTextWrapper w = (REDTextWrapper) fModels.get(fullFileName);
+		REDTextWrapper w = fModels.get(fullFileName);
 		if (w == null) {
 			text = new REDText(fullFileName);			
 			w = new REDTextWrapper(text, privateCopy);
@@ -66,7 +66,7 @@ public class REDTextServer {
 	public static void releaseText(REDText text) {
 		if (text == null || text.getFilename().equals("")) return;
 		String name = text.getFilename();
-		REDTextWrapper w = (REDTextWrapper) fModels.get(name);
+		REDTextWrapper w = fModels.get(name);
 		w.decRefCount(text);
 		if (w.getSharedRefCount() <= 0) {
 			w.setText(null);
@@ -82,7 +82,7 @@ public class REDTextServer {
 	  * @return The number of shared text copies acquired for the given fullFileName
 	  */
 	public static int getSharedRefCount(String fullFileName) {
-		REDTextWrapper w = (REDTextWrapper) fModels.get(fullFileName);
+		REDTextWrapper w = fModels.get(fullFileName);
 		if (w == null) {
 			return 0;
 		}
@@ -97,7 +97,7 @@ public class REDTextServer {
 	  * @return <br>&nbsp;true: if a copy of the text is currently in memory <br>&nbsp;false: otherwise
 	  */
 	public static boolean isTextLoaded(String fullFileName, boolean usePrivateCopies) {
-		REDTextWrapper w = (REDTextWrapper) fModels.get(fullFileName);
+		REDTextWrapper w = fModels.get(fullFileName);
 		return w != null && (w.getText() != null || usePrivateCopies);
 	}
 	
@@ -106,7 +106,7 @@ public class REDTextServer {
 	  * @return <code>true</code> if a copy of the text is currently modified; <code>false</code> otherwise.
 	  */
 	public static boolean isTextModified(String fullFileName) {
-		REDTextWrapper w = (REDTextWrapper) fModels.get(fullFileName);
+		REDTextWrapper w = fModels.get(fullFileName);
 		if (w != null) {
 			REDText text = w.getText();
 			if (text != null) {
@@ -119,7 +119,7 @@ public class REDTextServer {
 	/** Get loaded text filenames Iterator.
 	  * @param Iterator An Iterator over the loaded text names. Will iterate in ascending order.
 	 */	
-	public static Iterator getTextsFilenameIterator() {
+	public static Iterator<String> getTextsFilenameIterator() {
 		return fModels.keySet().iterator();
 	}
 	
@@ -149,7 +149,7 @@ public class REDTextServer {
 	  */
 	static private void callListeners(int op, String filename, boolean modified) {
 		for (int j = 0; j < fListeners.size(); j++) {
-			REDTextServerEventListener listener = (REDTextServerEventListener) fListeners.get(j);
+			REDTextServerEventListener listener = fListeners.get(j);
 			switch(op) {
 				case LI_STATE:
 					listener.textStateChanged(filename, modified);
@@ -171,8 +171,8 @@ public class REDTextServer {
 	// Listeners end
 		
 	/** Maps filenames to REDTextWrapper objects. */
-	private static Map fModels = new TreeMap();	
+	private static Map<String, REDTextWrapper> fModels = new TreeMap<>();	
 	
 	/** Holds event listeners. */
-	private static ArrayList fListeners = new ArrayList();
+	private static ArrayList<REDTextServerEventListener> fListeners = new ArrayList<>();
 }
