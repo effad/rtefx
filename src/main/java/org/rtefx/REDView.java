@@ -20,6 +20,7 @@ package org.rtefx;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -81,9 +82,13 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		setAutoscrolls(true);
 		addFocusListener(this);
-		setBackground(fText.getDefaultStyle().getBackground());
+		setBackground(convert(fText.getDefaultStyle().getBackground()));
 		fInsets = getInsets();
 		REDStyleManager.addStyleEventListener(this);
+	}
+
+	private Color convert(javafx.scene.paint.Color background) {
+		return new Color((int) (background.getRed() * 256), (int) (background.getGreen() * 256), (int) (background.getBlue() * 256));
 	}
 
 	class CaretBlink implements ActionListener {
@@ -250,7 +255,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			// build line batch 
 			do {
 				fViewStretch = fText.getViewStretch(curPos, fViewStretch, fVisualizeWhitespace);
-				FontMetrics metrics = g.getFontMetrics(fViewStretch.fStyle.getFont());
+				FontMetrics metrics = g.getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 				curX = makePaintBatchEntry(metrics, batchEntries, curX, curPos);
 				batchEntries++;
 				lineHeight = Math.max(lineHeight, metrics.getHeight());
@@ -262,10 +267,10 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			for (int b = 0; b < batchEntries; b++) {
 				try {
 					PaintBatchEntry e = ((PaintBatchEntry) fPaintBatch.get(b));
-					g.setColor(e.fStyle.getBackground());
+					g.setColor(convert(e.fStyle.getBackground()));
 					g.fillRect(e.fX, curY, e.fWidth, lineHeight);
-					g.setFont(e.fStyle.getFont());
-					g.setColor(e.fStyle.getForeground());
+					g.setFont(convert(e.fStyle.getFont()));
+					g.setColor(convert(e.fStyle.getForeground()));
 					if (e.fSpecial != SP_NONE) {
 						if (fVisualizeWhitespace) {
 							String s = "";
@@ -315,6 +320,10 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			paintHighlightLine(g);
 		}
 //		sw.stop("Custom painting");
+	}
+
+	private Font convert(javafx.scene.text.Font font) {
+		return Font.decode(font.getFamily() + "-" + font.getSize());
 	}
 
 	private void paintCaret(Graphics g) {
@@ -457,7 +466,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		do {
 			fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 			if (fViewStretch.fType == REDViewStretch.EOF) break;
-			metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			switch (fViewStretch.fType) {
 				case REDViewStretch.TAB:
 					curX = nextTabStop(curX, Math.min(fViewStretch.fLength, position - curPos));
@@ -478,12 +487,12 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 				reuse.fBoundRect.width = nextTabStop(curX, 1) - curX;
 			break;
 			case REDViewStretch.TEXT:
-				metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+				metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 				fScratchBuffer = fText.asBytes(position, position + 1, fScratchBuffer);
 				reuse.fBoundRect.width = metrics.bytesWidth(fScratchBuffer, 0, 1);
 			break;
 			case REDViewStretch.LINEBREAK:
-				metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+				metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 				reuse.fBoundRect.width = metrics.stringWidth("X") * fViewStretch.fLength;	// TBD: use real width of mapped chars.
 			break;
 			case REDViewStretch.EOF:
@@ -532,7 +541,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 
 		fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		while (curX < x && fViewStretch.fType != REDViewStretch.LINEBREAK && fViewStretch.fType != REDViewStretch.EOF) {
-			FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			prevX = curX;
 			switch (fViewStretch.fType) {
 				case REDViewStretch.TAB:
@@ -563,7 +572,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 					}
 				break;
 				case REDViewStretch.TEXT:
-					FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+					FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 					fScratchBuffer = fText.asBytes(prevPos, prevPos + fViewStretch.fLength, fScratchBuffer);
 					while (i < fViewStretch.fLength && (curX <= x || midSplit && curX - lastWidth / 2 <= x)) {
 						prevX = curX;
@@ -580,7 +589,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			reuse.fPosition = curPos;
 			reuse.fBoundRect.x = curX + fInsets.left;
 			if (fViewStretch.fStyle != null) {
-				FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+				FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 				reuse.fBoundRect.width = metrics.stringWidth("X") * fViewStretch.fLength;
 			}
 			else {
@@ -597,7 +606,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		do {
 			fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 			if (fViewStretch.fType == REDViewStretch.EOF) break;
-			FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			switch (fViewStretch.fType) {
 				case REDViewStretch.TAB:
 					curX = nextTabStop(curX, fViewStretch.fLength);
@@ -632,7 +641,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		fExtent.width -= fInsets.left + fInsets.right;
 		fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		while (fViewStretch.fType != REDViewStretch.EOF && curPos < endPos) {
-			FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			switch (fViewStretch.fType) {
 				case REDViewStretch.TEXT:
 					lineWidth += metrics.getMaxAdvance() * fViewStretch.fLength;
@@ -688,7 +697,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		fHighlightLine = -1;
 		fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		while (fViewStretch.fType != REDViewStretch.EOF && curPos < to) {
-			FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			lineHeight = Math.max(lineHeight, metrics.getHeight());
 			switch (fViewStretch.fType) {
 				case REDViewStretch.LINEBREAK:
@@ -702,7 +711,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		} 
 
-		FontMetrics metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+		FontMetrics metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 		lineHeight = Math.max(lineHeight, metrics.getHeight());
 		totalHeight += lineHeight;
 		v.add(new REDLineTreeData(totalHeight, lineNr));
@@ -846,7 +855,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 		
 		fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		while (fViewStretch.fType != REDViewStretch.EOF) {
-			metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			lineHeight = Math.max(lineHeight, metrics.getHeight());
 			switch (fViewStretch.fType) {
 				case REDViewStretch.LINEBREAK:
@@ -862,7 +871,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 
 		if (lineHeight == 0) {	// empty last line
 			if (metrics == null) {	// no predecessor => take default font height
-				metrics = getFontMetrics(fText.getDefaultStyle().getFont());
+				metrics = getFontMetrics(convert(fText.getDefaultStyle().getFont()));
 			}
 			lineHeight = metrics.getHeight();
 		}	
@@ -888,13 +897,13 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 	
 		fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		while (fViewStretch.fType != REDViewStretch.EOF && fViewStretch.fType != REDViewStretch.LINEBREAK) {
-			metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			lineHeight = Math.max(lineHeight, metrics.getHeight());
 			curPos += fViewStretch.fLength;
 			fViewStretch = fText.getViewStretch(curPos, fViewStretch);
 		} 
 		if (fViewStretch.fStyle != null) {
-			metrics = getFontMetrics(fViewStretch.fStyle.getFont());
+			metrics = getFontMetrics(convert(fViewStretch.fStyle.getFont()));
 			lineHeight = Math.max(lineHeight, metrics.getHeight());
 		}
 		return lineHeight;
@@ -928,7 +937,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 	  */
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		REDStyle s = fText.getDefaultStyle();
-		FontMetrics metrics = getFontMetrics(s.getFont());
+		FontMetrics metrics = getFontMetrics(convert(s.getFont()));
 		if (orientation == SwingConstants.HORIZONTAL) {
 			return metrics.getMaxAdvance();
 		}
@@ -942,7 +951,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 	  */
 	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
 		REDStyle s = fText.getDefaultStyle();
-		FontMetrics metrics = getFontMetrics(s.getFont());
+		FontMetrics metrics = getFontMetrics(convert(s.getFont()));
 		if (orientation == SwingConstants.HORIZONTAL) {
 			return visibleRect.width - metrics.getMaxAdvance();
 		}
@@ -1218,7 +1227,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			xoff = vp.getLowerLeftPoint().x;
 		}
 		REDStyle s = fText.getDefaultStyle();
-		FontMetrics metrics = getFontMetrics(s.getFont());
+		FontMetrics metrics = getFontMetrics(convert(s.getFont()));
 		REDViewPosition np = locatePoint(xoff, vp.getLowerLeftPoint().y - getVisibleRect().height + metrics.getHeight(), null, true);	// TBD: last parameter false, if overwrite mode
 
 		return np.getTextPosition();
@@ -1230,7 +1239,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			xoff = vp.getLowerLeftPoint().x;
 		}
 		REDStyle s = fText.getDefaultStyle();
-		FontMetrics metrics = getFontMetrics(s.getFont());
+		FontMetrics metrics = getFontMetrics(convert(s.getFont()));
 		REDViewPosition np = locatePoint(xoff, vp.getUpperLeftPoint().y + getVisibleRect().height - metrics.getHeight(), null, true);		// TBD: last parameter false, if overwrite mode
 
 		return np.getTextPosition();
@@ -1493,7 +1502,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 	}
 	
 	void setTabWidth(int tabWidth) {
-		FontMetrics metrics = getFontMetrics(fText.getDefaultStyle().getFont());
+		FontMetrics metrics = getFontMetrics(convert(fText.getDefaultStyle().getFont()));
 		fTabWidth = tabWidth * metrics.charWidth(' ');
 		recalcIndentString();
 		checkLineWidth(0, fText.getNrOfLines());
@@ -1501,19 +1510,19 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 	}
 	
 	int getTabWidth() {
-		FontMetrics metrics = getFontMetrics(fText.getDefaultStyle().getFont());
+		FontMetrics metrics = getFontMetrics(convert(fText.getDefaultStyle().getFont()));
 		return fTabWidth / metrics.charWidth(' ');
 	}
 	
 	void setMinTabWidth(int minWidth) {
-		FontMetrics metrics = getFontMetrics(fText.getDefaultStyle().getFont());
+		FontMetrics metrics = getFontMetrics(convert(fText.getDefaultStyle().getFont()));
 		fTabMin = minWidth * metrics.charWidth(' ');
 		checkLineWidth(0, fText.getNrOfLines());
 		repaint();
 	}
 	
 	int getMinTabWidth() {
-		FontMetrics metrics = getFontMetrics(fText.getDefaultStyle().getFont());
+		FontMetrics metrics = getFontMetrics(convert(fText.getDefaultStyle().getFont()));
 		return fTabMin / metrics.charWidth(' ');
 	}
 	
@@ -1692,7 +1701,7 @@ public class REDView extends JPanel implements REDTextEventListener, REDStyleEve
 			lineMax = 0;
 			for (int j = lineStart+1; j <= lineEnd; j++) {
 				REDStyle s = fText.getStyle(j); 
-				FontMetrics metrics = getFontMetrics(s.getFont());
+				FontMetrics metrics = getFontMetrics(convert(s.getFont()));
 				lineMax = Math.max(lineMax, metrics.getHeight());
 			}
 			topLine += lineMax;

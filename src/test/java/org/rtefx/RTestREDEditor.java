@@ -72,7 +72,6 @@ public class RTestREDEditor extends TestCase {
 		suite.addTestSuite(RTestREDEditorFileIO.class);
 		suite.addTestSuite(RTestREDEditorModification.class);
 		suite.addTestSuite(RTestREDEditorIndent.class);
-		suite.addTestSuite(RTestREDEditorMisc.class);
 		return suite;
 	}
 	/**

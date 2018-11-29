@@ -2,13 +2,14 @@ package org.rtefx;
 
 import javafx.scene.control.skin.VirtualContainerBase;
 import javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.layout.StackPane;
 
 public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 
 	private VirtualFlow<RTELineCell> flow;
 
 	protected RTEViewSkin(RTEView control) {
-		super(control);
+		super(control);		
 		flow = getVirtualFlow();
         flow.setCellFactory(flow -> createCell());
         getChildren().add(flow);
@@ -41,7 +42,7 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
 	
     /** {@inheritDoc} */
     @Override protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return computePrefHeight(-1, topInset, rightInset, bottomInset, leftInset) * 0.618033987;
+        return computePrefHeight(-1, topInset, rightInset, bottomInset, leftInset) * 0.618033987; // TODO :: calculate real width
     }
 
     /** {@inheritDoc} */

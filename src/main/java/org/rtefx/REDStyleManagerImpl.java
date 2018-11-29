@@ -17,7 +17,8 @@
  
 package org.rtefx;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +41,7 @@ import org.rtefx.xml.REDXMLManager;
 public class REDStyleManagerImpl {
 	REDStyleManagerImpl() {
 		fNameToStyleMap = new TreeMap();
-		fDefaultStyle = new REDStyle(Color.black, Color.white, REDLining.NONE, "Monospaced", "plain", 12, null);
+		fDefaultStyle = new REDStyle(Color.BLACK, Color.WHITE, REDLining.NONE, "Monospaced", "plain", 12, null);
 		fDefaultStyle.setName("Default");
 		fTheme = "Default";
 		fNameToStyleMap.put("Default", fDefaultStyle);

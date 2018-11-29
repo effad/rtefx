@@ -9,7 +9,7 @@ public class RTELineCellSkin extends CellSkinBase<RTELineCell> {
 	
 	public RTELineCellSkin(RTELineCell control) {
 		super(control);
-		line = new Text("foobar" + this);
+		line = new Text();
 		line.textProperty().bind(control.itemProperty().asString());
 		getChildren().add(control.getLineFlow());
 	}

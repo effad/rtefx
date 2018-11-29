@@ -17,11 +17,14 @@
  
 package org.rtefx;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 
-import org.rtefx.plugins.synhi.*;
+import org.rtefx.plugins.synhi.REDSyntaxHighlighter;
+import org.rtefx.plugins.synhi.REDSyntaxHighlighterManager;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /** Regression test for REDStream
   * @author rli@chello.at
@@ -187,7 +190,7 @@ public class RTestREDStream extends TestCase {
 	
 	
 	public void testSelectedStylesBackwardExtremeCase() {
-		REDStyle style = new REDStyle(new Color(250, 100, 100), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
+		REDStyle style = new REDStyle(new Color(250, 100, 100, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
 		REDStyleManager.addStyle("testSelectedStylesBackwardExtremeCaseStyle", style);
 		REDEditor editor = new REDEditor();
 		editor.replace("X-----", 0, 0, null);

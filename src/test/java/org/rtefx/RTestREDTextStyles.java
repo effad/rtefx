@@ -17,13 +17,20 @@
  
 package org.rtefx;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import junit.framework.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.Iterator;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /** JUnit test class for the classes REDStyle, REDStyleManager and the style handling of REDText. 
-  * @author gerald.czech@scch.at
+  * @author r.lichtenberger@gmail.com
   * @tier test
   */
 public class RTestREDTextStyles extends RTestREDText {
@@ -59,8 +66,8 @@ public class RTestREDTextStyles extends RTestREDText {
 	protected void setUp() throws Exception {
 		super.setUp();
 		fDefaultMgrStyle = REDStyleManager.getDefaultStyle();
-		fSuperStyle = new REDStyle(Color.yellow, Color.blue, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
-		fStyle = new REDStyle(Color.lightGray, null, null, "Dialog", "BOLDITALIC", 10, fSuperStyle);
+		fSuperStyle = new REDStyle(Color.YELLOW, Color.BLUE, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
+		fStyle = new REDStyle(Color.LIGHTGRAY, null, null, "Dialog", "BOLDITALIC", 10, fSuperStyle);
 	}
 	
 	/**
@@ -68,13 +75,13 @@ public class RTestREDTextStyles extends RTestREDText {
 	 */
 	public void testMgrDefaultStyle() {
 		assertEquals("Mgr default style has wrong foreground color.",
-				Color.black, fDefaultMgrStyle.getForeground());
+				Color.BLACK, fDefaultMgrStyle.getForeground());
 		assertEquals("Mgr default style has wrong background color.",
-				Color.white, fDefaultMgrStyle.getBackground());
+				Color.WHITE, fDefaultMgrStyle.getBackground());
 		assertEquals("Mgr default style has wrong lining.",
 				REDLining.NONE, fDefaultMgrStyle.getLining());
 		assertEquals("Mgr default style has wrong font.",
-				new Font("Monospaced", Font.PLAIN, 12),
+				Font.font("Monospaced", 12),
 				fDefaultMgrStyle.getFont());
 	}
 	
@@ -90,20 +97,20 @@ public class RTestREDTextStyles extends RTestREDText {
 	 * Tests the getForeground() method of REDStyle.
 	 */
 	public void testGetForeground() {
-		assertEquals("Wrong foreground color of super style.", Color.yellow,
+		assertEquals("Wrong foreground color of super style.", Color.YELLOW,
 				fSuperStyle.getForeground());
 		assertEquals("Wrong foreground color of inherited style.",
-				Color.lightGray, fStyle.getForeground());
+				Color.LIGHTGRAY, fStyle.getForeground());
 	}
 	
 	/**
 	 * Tests the getBackground() method of REDStyle.
 	 */
 	public void testGetBackground() {
-		assertEquals("Wrong background color of super style.", Color.blue,
+		assertEquals("Wrong background color of super style.", Color.BLUE,
 				fSuperStyle.getBackground());
 		assertEquals("Wrong background color of inherited style.",
-				Color.blue, fStyle.getBackground());
+				Color.BLUE, fStyle.getBackground());
 	}
 
 	/**
@@ -121,9 +128,9 @@ public class RTestREDTextStyles extends RTestREDText {
 	 */
 	public void testGetFont() {
 		assertEquals("Wrong font of super style.",
-				new Font("Serif", Font.ITALIC, 16), fSuperStyle.getFont());
+				Font.font("Serif", FontPosture.ITALIC, 16), fSuperStyle.getFont());
 		assertEquals("Wrong font of inherited style.",
-				new Font("Dialog", Font.BOLD + Font.ITALIC, 10), fStyle.getFont());
+				Font.font("Dialog", FontWeight.BOLD, FontPosture.ITALIC, 10), fStyle.getFont());
 	}
 	
 	/**
@@ -359,26 +366,28 @@ public class RTestREDTextStyles extends RTestREDText {
 	
 	/** Test fixup of superstyles when replacing an existing style. */
 	public void testSuperstyleFixup() {
-		REDStyle super1 = new REDStyle(Color.yellow, Color.red, REDLining.SINGLEUNDER, "Serif", "PLAIN", 16, null);
+		REDStyle super1 = new REDStyle(Color.YELLOW, Color.RED, REDLining.SINGLEUNDER, "Serif", "PLAIN", 16, null);
 		REDStyleManager.addStyle("Super1", super1);
 		REDStyle derived = new REDStyle(null, null, null, null, null, REDStyle.INHERITED, super1);
 		REDStyleManager.addStyle("Derived", derived);
-		assertTrue(derived.getForeground() == Color.yellow);
+		assertTrue(derived.getForeground() == Color.YELLOW);
 		assertTrue(derived.getFontFace().equals("Serif"));
-		assertTrue(derived.getFontStyle().equals("PLAIN"));
+		assertTrue(derived.getFontPosture().equals(FontPosture.REGULAR));
+		assertTrue(derived.getFontWeight().equals(FontWeight.NORMAL));
 		assertTrue(derived.getFontSize() == 16);
-		REDStyle super2 = new REDStyle(Color.green, Color.red, REDLining.SINGLEUNDER, "Times", "BOLD", 12, null);
+		REDStyle super2 = new REDStyle(Color.GREEN, Color.RED, REDLining.SINGLEUNDER, "Times", "BOLD", 12, null);
 		REDStyleManager.addStyle("Super1", super2);
-		assertTrue(derived.getForeground() == Color.green);
+		assertTrue(derived.getForeground() == Color.GREEN);
 		assertTrue(derived.getFontFace().equals("Times"));
-		assertTrue(derived.getFontStyle().equals("BOLD"));
+		assertTrue(derived.getFontPosture().equals(FontPosture.REGULAR));
+		assertTrue(derived.getFontWeight().equals(FontWeight.BOLD));
 		assertTrue(derived.getFontSize() == 12);		
 	}
 	
 	/** Test key -> value mappings */
 	public void testMappings() {
-		REDStyle style1 = new REDStyle(Color.yellow, Color.red, REDLining.SINGLEUNDER, "Serif", "PLAIN", 16, REDStyleManager.getDefaultStyle());
-		REDStyle style2 = new REDStyle(Color.green, Color.red, REDLining.SINGLEUNDER, "Times", "BOLD", 12, style1);
+		REDStyle style1 = new REDStyle(Color.YELLOW, Color.RED, REDLining.SINGLEUNDER, "Serif", "PLAIN", 16, REDStyleManager.getDefaultStyle());
+		REDStyle style2 = new REDStyle(Color.GREEN, Color.RED, REDLining.SINGLEUNDER, "Times", "BOLD", 12, style1);
 		REDStyleManager.addStyle("Style1", style1);
 		REDStyleManager.addStyle("Style2", style2);
 		assertEquals(style1, REDStyleManager.getStyle("Style1"));
@@ -502,7 +511,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	
 	public void testDisplayName() throws Exception {
 		readAdditionalStyleFile("RTestREDTextStyles.4.xml", null);
-		REDStyle s = new REDStyle(Color.yellow, Color.blue, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
+		REDStyle s = new REDStyle(Color.YELLOW, Color.BLUE, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
 		REDStyleManager.addStyle("DisplayTestStyle", s);
 		assertEquals("DisplayTestStyle", s.getDisplayName());
 		s.setDisplayName("Test Display Style");
@@ -517,7 +526,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	
 	public void testDescription() throws Exception {
 		readAdditionalStyleFile("RTestREDTextStyles.4.xml", null);
-		REDStyle s = new REDStyle(Color.yellow, Color.blue, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
+		REDStyle s = new REDStyle(Color.YELLOW, Color.BLUE, REDLining.SINGLEUNDER, "Serif", "ITALIC", 16, null);
 		REDStyleManager.addStyle("DisplayTestStyle", s);
 		assertEquals("", s.getDescription());
 		s.setDescription("Test Description");
@@ -530,19 +539,21 @@ public class RTestREDTextStyles extends RTestREDText {
 		assertEquals("This style is used to test the display name and description property of styles.", s.getDescription());
 	}	
 	
-	private void assertStyle(REDStyle s, String theme, String face, int size, String style, REDLining lining, Color fg, Color bg) {
+	private void assertStyle(REDStyle s, String theme, String face, int size, FontPosture posture, FontWeight weight, REDLining lining, Color fg, Color bg) {
 		assertEquals(face, s.getFontFace(theme));
 		assertEquals(size, s.getFontSize(theme));
-		assertEquals(style, s.getFontStyle(theme));
+		assertEquals(posture, s.getFontPosture(theme));
+		assertEquals(weight, s.getFontWeight(theme));
 		assertEquals(lining, s.getLining(theme));
 		assertEquals(fg, s.getForeground(theme));
 		assertEquals(bg, s.getBackground(theme));
 	}
 	
-	private void assertStyleDefines(REDStyle s, String theme, boolean face, boolean size, boolean style, boolean lining, boolean fg, boolean bg, boolean superStyle) {
+	private void assertStyleDefines(REDStyle s, String theme, boolean face, boolean size, boolean posture, boolean weight, boolean lining, boolean fg, boolean bg, boolean superStyle) {
 		assertEquals(face, s.definesFontFace(theme));
 		assertEquals(size, s.definesFontSize(theme));
-		assertEquals(style, s.definesFontStyle(theme));
+		assertEquals(posture, s.definesFontPosture(theme));
+		assertEquals(weight, s.definesFontWeight(theme));
 		assertEquals(lining, s.definesLining(theme));
 		assertEquals(fg, s.definesForeground(theme));
 		assertEquals(bg, s.definesBackground(theme));
@@ -552,25 +563,25 @@ public class RTestREDTextStyles extends RTestREDText {
 	public void testThemeGetAndHas() throws Exception {
 		readAdditionalStyleFile("RTestREDTextStyles.5.xml", null);
 		REDStyle s = REDStyleManager.getStyle("ThemesTestStyle1");
-		assertStyle(s, "Default", "Helvetica", 12, "plain", REDLining.NONE, Color.black, Color.white);
-		assertStyle(s, "TestTheme1", "Monospaced", 10, "italic", REDLining.DOUBLEUNDER, new Color(10, 10, 10), new Color(245, 245, 245));
-		assertStyle(s, "TestTheme2", "Tahoma", 8, "bolditalic", REDLining.DOUBLETHROUGH, new Color(20, 20, 20), new Color(55, 55, 55));
-		assertStyleDefines(s, "Default", true, true, true, true, true, true, false);
-		assertStyleDefines(s, "TestTheme1", true, true, true, true, true, true, false);
-		assertStyleDefines(s, "TestTheme2", true, true, true, true, true, true, false);
+		assertStyle(s, "Default", "Helvetica", 12, FontPosture.REGULAR, FontWeight.NORMAL, REDLining.NONE, Color.BLACK, Color.WHITE);
+		assertStyle(s, "TestTheme1", "Monospaced", 10, FontPosture.ITALIC, FontWeight.NORMAL, REDLining.DOUBLEUNDER, new Color(10, 10, 10, 1), new Color(245, 245, 245, 1));
+		assertStyle(s, "TestTheme2", "Tahoma", 8, FontPosture.ITALIC, FontWeight.BOLD, REDLining.DOUBLETHROUGH, new Color(20, 20, 20, 1), new Color(55, 55, 55, 1));
+		assertStyleDefines(s, "Default", true, true, true, true, true, true, true, false);
+		assertStyleDefines(s, "TestTheme1", true, true, true, true, true, true, true, false);
+		assertStyleDefines(s, "TestTheme2", true, true, true, true, true, true, true, false);
 		
 		s = REDStyleManager.getStyle("ThemesTestStyle2");
-		assertStyle(s, "Default", "Arial", 12, "plain", REDLining.NONE, Color.black, Color.white);
-		assertStyle(s, "TestTheme1", "Helvetica", 10, "italic", REDLining.DOUBLEUNDER, new Color(10, 10, 10), new Color(245, 245, 245));
-		assertStyle(s, "TestTheme2", "Monospaced", 18, "plain", REDLining.NONE, Color.black, Color.white);
-		assertStyleDefines(s, "Default", true, false, false, false, false, false, true);
-		assertStyleDefines(s, "TestTheme1", true, false, false, false, false, false, true);
-		assertStyleDefines(s, "TestTheme2", false, true, false, false, false, false, true);
+		assertStyle(s, "Default", "Arial", 12, FontPosture.REGULAR, FontWeight.NORMAL, REDLining.NONE, Color.BLACK, Color.WHITE);
+		assertStyle(s, "TestTheme1", "Helvetica", 10, FontPosture.ITALIC, FontWeight.NORMAL, REDLining.DOUBLEUNDER, new Color(10, 10, 10, 1), new Color(245, 245, 245, 1));
+		assertStyle(s, "TestTheme2", "Monospaced", 18, FontPosture.REGULAR, FontWeight.NORMAL, REDLining.NONE, Color.BLACK, Color.WHITE);
+		assertStyleDefines(s, "Default", true, false, false, false, false, false, false, true);
+		assertStyleDefines(s, "TestTheme1", true, false, false, false, false, false, false, true);
+		assertStyleDefines(s, "TestTheme2", false, true, false, false, false, false, false, true);
 	}
 	
 	private int nrRegisteredStyles(REDStyleManagerImpl m) {
 		int x = 0;
-		Iterator iter = m.doIterator();
+		Iterator<REDStyle> iter = m.doIterator();
 		while (iter.hasNext()) {
 			x++; iter.next();
 		}
@@ -578,7 +589,7 @@ public class RTestREDTextStyles extends RTestREDText {
 	}
 	
 	private void assertManagerHasNot(REDStyleManagerImpl m, REDStyle s) {
-		Iterator iter = m.doIterator();
+		Iterator<REDStyle> iter = m.doIterator();
 		while (iter.hasNext()) {
 			assertTrue(iter.next() != s);
 		}
@@ -594,7 +605,7 @@ public class RTestREDTextStyles extends RTestREDText {
 		assertEquals(nrRegisteredStyles(src), nrRegisteredStyles(cp));
 		
 		// Check that no object from src is in cp
-		Iterator iter = src.doIterator();
+		Iterator<REDStyle> iter = src.doIterator();
 		while (iter.hasNext()) {
 			s = (REDStyle) iter.next();
 			assertManagerHasNot(cp, s);
@@ -627,7 +638,7 @@ public class RTestREDTextStyles extends RTestREDText {
 		
 		// Check name identity		
 		iter = src.doIterator();
-		Iterator iter2 = cp.doIterator();
+		Iterator<REDStyle> iter2 = cp.doIterator();
 		while (iter.hasNext()) {
 			REDStyle s1 = (REDStyle) iter.next();
 			REDStyle s2 = (REDStyle) iter2.next();
@@ -653,11 +664,11 @@ public class RTestREDTextStyles extends RTestREDText {
 		assertTrue(src.doGetStyle("ThemesTestStyle1").getFont() != cp.doGetStyle("ThemesTestStyle1").getFont());
 		
 		// If we add a style in src it won't be there in cp
-		src.doAddStyle("testManagerDeepCopyStyle1", new REDStyle(Color.green, Color.blue, REDLining.NONE, "Tahoma", "plain", 12, src.doGetDefaultStyle()));
+		src.doAddStyle("testManagerDeepCopyStyle1", new REDStyle(Color.GREEN, Color.BLUE, REDLining.NONE, "Tahoma", "plain", 12, src.doGetDefaultStyle()));
 		assertTrue(!cp.doHasStyle("testManagerDeepCopyStyle1"));
 		
 		// If we add a style in cp it won't be there in src
-		cp.doAddStyle("testManagerDeepCopyStyle2", new REDStyle(Color.green, Color.blue, REDLining.NONE, "Tahoma", "plain", 12, cp.doGetDefaultStyle()));
+		cp.doAddStyle("testManagerDeepCopyStyle2", new REDStyle(Color.GREEN, Color.BLUE, REDLining.NONE, "Tahoma", "plain", 12, cp.doGetDefaultStyle()));
 		assertTrue(!src.doHasStyle("testManagerDeepCopyStyle2"));
 		
 		// No superstyle of cp is in src
@@ -698,7 +709,9 @@ public class RTestREDTextStyles extends RTestREDText {
 		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
 		registered.setFontSize("Default", 12);
 		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
-		registered.setFontStyle("Default", "plain");
+		registered.setFontPosture("Default", FontPosture.REGULAR);
+		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
+		registered.setFontWeight("Default", FontWeight.NORMAL);
 		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
 		registered.setLining("Default", REDLining.SINGLEUNDER);
 		checkEvents("beforeStyleChange(" + arr + ")\nafterStyleChange([" + registered + "])", proxy); proxy.clear(); arr = "[" + registered + "]";
@@ -712,7 +725,8 @@ public class RTestREDTextStyles extends RTestREDText {
 		// unregistered style must not cause event
 		unRegistered.setFontFace("Default", "Monospaced");
 		unRegistered.setFontSize("Default", 12);
-		unRegistered.setFontStyle("Default", "plain");
+		unRegistered.setFontPosture("Default", FontPosture.REGULAR);
+		unRegistered.setFontWeight("Default", FontWeight.NORMAL);
 		unRegistered.setLining("Default", REDLining.SINGLEUNDER);
 		unRegistered.setForeground("Default", 12, 13, 14);
 		unRegistered.setBackground("Default", 15, 16, 17);
@@ -728,7 +742,8 @@ public class RTestREDTextStyles extends RTestREDText {
 		assertTrue(REDStyleManager.removeStyleEventListener(listener));
 		registered.setFontFace("Default", null);
 		registered.setFontSize("Default", REDStyle.INHERITED);
-		registered.setFontStyle("Default", null);
+		registered.setFontPosture("Default", null);
+		registered.setFontWeight("Default", null);
 		registered.setLining("Default", null);
 		registered.setForeground("Default", null);
 		registered.setBackground("Default", null);

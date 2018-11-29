@@ -1,17 +1,19 @@
 package org.rtefx;
 
+import javafx.scene.Cursor;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class RTEView extends Control {
 	
 	private REDText text;
+	private int cursorPos = 0;
 
 	public RTEView(REDText text) {
 		this.text = text;
+		setCursor(Cursor.TEXT);
 	}
 	
 	@Override
@@ -39,15 +41,10 @@ public class RTEView extends Control {
 			int len = stretch.fRunSpec.fRun.copyInto(buf, 0, stretch.fLength, stretch.fRunSpec.fOff);			
 			String str = new String(buf, 0, len);
 			Text t = new Text(str);
-			t.setFont(convert(stretch.fStyle.getFont()));
+			t.setFont(stretch.fStyle.getFont());
 			flow.getChildren().add(t);
 			pos += stretch.fLength;
 			text.getViewStretch(pos, stretch);
 		}
-	}
-
-	// TODO :: REDStyle should contain javafx.scene.text.Font, this method should not be necessary 
-	private Font convert(java.awt.Font font) {
-		return Font.font(font.getFamily(), font.getSize());
 	}
 }

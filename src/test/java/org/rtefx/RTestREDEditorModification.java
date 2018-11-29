@@ -16,9 +16,10 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 package org.rtefx;
+import javafx.scene.paint.Color;
 
-import junit.framework.*;
-import java.awt.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
   * JUnit TestCase class for all kinds of modifications of red.REDEditor. This
@@ -847,7 +848,7 @@ public class RTestREDEditorModification extends RTestREDEditor {
 	/** Tests the setting of style. */
 	public void testStyle() {
 		REDEditor editor = getTestEditor();
-		REDStyle style = new REDStyle(new Color(100, 100, 250), new Color(255, 255, 255), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
+		REDStyle style = new REDStyle(new Color(100, 100, 250, 1), new Color(255, 255, 255, 1), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
 		String result = TEXT_CONTENT;
 			
 		assertTrue("Test was modified before any change", !editor.isModified());
@@ -860,7 +861,7 @@ public class RTestREDEditorModification extends RTestREDEditor {
 	/** Test idempotent style operations, which must not result in listener events. */
 	public void testStyleIdempotent() {
 		REDEditor editor = getTestEditor();
-		REDStyle style = new REDStyle(new Color(100, 100, 250), new Color(255, 255, 255), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
+		REDStyle style = new REDStyle(new Color(100, 100, 250, 1), new Color(255, 255, 255, 1), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
 		String result = TEXT_CONTENT;
 		
 		// set style on first few chars => events must happen
@@ -901,7 +902,7 @@ public class RTestREDEditorModification extends RTestREDEditor {
 	/** Tests the use of style batch mode. */
 	public void testStyleBatch() {
 		REDEditor editor = getTestEditor();
-		REDStyle style = new REDStyle(new Color(100, 100, 250), new Color(255, 255, 255), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
+		REDStyle style = new REDStyle(new Color(100, 100, 250, 1), new Color(255, 255, 255, 1), REDLining.DOUBLEUNDER, "Helvetica", "PLAIN", 18, null);
 		String result = TEXT_CONTENT;
 			
 		assertTrue("Test was modified before any change", !editor.isModified());

@@ -17,8 +17,11 @@
  
 package org.rtefx;
 
-import java.awt.Color;
-import java.awt.Font;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -48,6 +51,12 @@ public class REDStyle implements REDXMLReadable {
 	/** Inherited from superstyle. */
 	final public static int INHERITED = -1;
 
+	private TreeMap<String, ThemeEntry> themes;
+	private ThemeEntry curTheme;
+	private HashMap<Object, Object> mappings;	
+	private String fName, fDisplayName, fDescription;
+	private REDStyleManagerImpl fManager;
+	
 	/** Create a style.
 	  * You should not call this constructor directly. Ask the REDStyleManager for a shared style.
 	  * @param foreground The foreground color of the style.
@@ -60,16 +69,15 @@ public class REDStyle implements REDXMLReadable {
 	public REDStyle(Color foreground, Color background, REDLining lining, String fontFace, String fontStyle, int fontSize, REDStyle superStyle) {
 		fName = "";
 		fManager = REDStyleManager.fgDevNull;
-		fMappings = new HashMap<>();
-		fThemes = new TreeMap<>();
-		fCurTheme = getOrCreateThemeEntry("Default");
-		fCurTheme.fForeground = foreground; 
-		fCurTheme.fBackground = background;
-		fCurTheme.fLining = lining;
-		fCurTheme.fFontFace = fontFace;
-		fCurTheme.fFontStyle = fontStyle;
-		fCurTheme.fFontSize = fontSize;
-		fCurTheme.fSuper = superStyle;
+		mappings = new HashMap<>();
+		themes = new TreeMap<>();
+		curTheme = getOrCreateThemeEntry("Default");
+		curTheme.foreground = foreground; 
+		curTheme.background = background;
+		curTheme.lining = lining;
+		curTheme.fontFace = fontFace;
+		curTheme.fontSize = fontSize;
+		curTheme.superStyle = superStyle;
 	}
 	
 	/** Create empty style.
@@ -81,12 +89,12 @@ public class REDStyle implements REDXMLReadable {
 	
 	REDStyle copy() {
 		REDStyle s = new REDStyle();
-		Iterator<String> iter = fThemes.keySet().iterator();
+		Iterator<String> iter = themes.keySet().iterator();
 		while (iter.hasNext()) {
 			String name = iter.next();
 			ThemeEntry e = getThemeEntry(name);
 			ThemeEntry eCopy = e.copy();
-			s.fThemes.put(name, eCopy);
+			s.themes.put(name, eCopy);
 		}
 		s.fDisplayName = fDisplayName;
 		s.fDescription = fDescription;
@@ -130,28 +138,28 @@ public class REDStyle implements REDXMLReadable {
 
 	/** Set foreground color.  */
 	public boolean setForeground(String theme, int red, int green, int blue) {
-		return setForeground(theme, new Color(red, green, blue));
+		return setForeground(theme, new Color(red, green, blue, 1));
 	}
 	
 	/** Set foreground color.  */
 	public boolean setForeground(String theme, Color c) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
 		fManager.doSendBeforeStyleChange(this);
-		e.fForeground = c;
+		e.foreground = c;
 		fManager.doSendAfterStyleChange(this);
 		return true;		
 	}
 	
 	/** Set background color.  */
 	public boolean setBackground(String theme, int red, int green, int blue) {
-		return setBackground(theme, new Color(red, green, blue));
+		return setBackground(theme, new Color(red, green, blue, 1));
 	}
 	
 	/** Set background color.  */
 	public boolean setBackground(String theme, Color c) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
 		fManager.doSendBeforeStyleChange(this);
-		e.fBackground = c;
+		e.background = c;
 		fManager.doSendAfterStyleChange(this);
 		return true;
 	}
@@ -161,17 +169,17 @@ public class REDStyle implements REDXMLReadable {
 	public boolean setLining(String theme, REDLining lining) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
 		fManager.doSendBeforeStyleChange(this);
-		e.fLining = lining;
+		e.lining = lining;
 		fManager.doSendAfterStyleChange(this);
 		return true;
 	}
 	
 	private boolean setSuper(String theme, REDStyle newSuper) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
-		if (newSuper != e.fSuper) {
+		if (newSuper != e.superStyle) {
 			fManager.doSendBeforeStyleChange(this);
-			e.fSuper = newSuper;
-			e.fFontCache = null;
+			e.superStyle = newSuper;
+			e.fontCache = null;
 			fManager.doSendAfterStyleChange(this);
 		}
 		return true;
@@ -188,10 +196,10 @@ public class REDStyle implements REDXMLReadable {
 	/** Set font face. */
 	public boolean setFontFace(String theme, String fontFace) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
-		if (fontFace != e.fFontFace) {
+		if (fontFace != e.fontFace) {
 			fManager.doSendBeforeStyleChange(this);
-			e.fFontFace = fontFace;
-			e.fFontCache = null;
+			e.fontFace = fontFace;
+			e.fontCache = null;
 			fManager.doSendAfterStyleChange(this);
 		}
 		return true;
@@ -200,22 +208,34 @@ public class REDStyle implements REDXMLReadable {
 	/** Set font size. */
 	public boolean setFontSize(String theme, int fontSize) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
-		if (fontSize != e.fFontSize) {
+		if (fontSize != e.fontSize) {
 			fManager.doSendBeforeStyleChange(this);
-			e.fFontSize = fontSize;
-			e.fFontCache = null;
+			e.fontSize = fontSize;
+			e.fontCache = null;
 			fManager.doSendAfterStyleChange(this);
 		}
 		return true;
 	}
 
-	/** Set font style. */
-	public boolean setFontStyle(String theme, String fontStyle) {
+	/** Set font posture. */
+	public boolean setFontPosture(String theme, FontPosture fontPosture) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
-		if (fontStyle != e.fFontStyle) {
+		if (fontPosture != e.fontPosture) {
 			fManager.doSendBeforeStyleChange(this);
-			e.fFontStyle = fontStyle;
-			e.fFontCache = null;
+			e.fontPosture = fontPosture;
+			e.fontCache = null;
+			fManager.doSendAfterStyleChange(this);
+		}
+		return true;
+	}
+
+	/** Set font posture. */
+	public boolean setFontWeight(String theme, FontWeight fontWeight) {
+		ThemeEntry e = getOrCreateThemeEntry(theme);
+		if (fontWeight != e.fontWeight) {
+			fManager.doSendBeforeStyleChange(this);
+			e.fontWeight = fontWeight;
+			e.fontCache = null;
 			fManager.doSendAfterStyleChange(this);
 		}
 		return true;
@@ -267,7 +287,7 @@ public class REDStyle implements REDXMLReadable {
 	
 	
 	private ThemeEntry getOrCreateThemeEntry(String theme) {
-		ThemeEntry e = fThemes.get(theme);
+		ThemeEntry e = themes.get(theme);
 		if (e == null) {
 			if (theme.equals("Default")) {
 				e = new ThemeEntry();
@@ -275,37 +295,38 @@ public class REDStyle implements REDXMLReadable {
 			else {
 				e = getThemeEntry("Default").copy();
 			}
-			fThemes.put(theme, e);
+			themes.put(theme, e);
 		}
 		return e;
 	}
 	
 	private ThemeEntry getThemeEntrySafe(String theme) {
-		ThemeEntry e = fThemes.get(theme);
+		ThemeEntry e = themes.get(theme);
 		if (e == null) {
-			e = fThemes.get("Default");
+			e = themes.get("Default");
 		}
 		return e;
 	}
 	
 	private ThemeEntry getThemeEntry(String theme) {
-		return fThemes.get(theme);
+		return themes.get(theme);
 	}
 	
 
 	private void merge(String theme, ThemeEntry source) {
 		ThemeEntry e = getOrCreateThemeEntry(theme);
-		e.fForeground = source.fForeground;
-		e.fBackground = source.fBackground;
-		e.fLining = source.fLining;
-		e.fFontFace = source.fFontFace;
-		e.fFontStyle = source.fFontStyle;
-		e.fFontSize = source.fFontSize;
-		e.fSuper = source.fSuper;
+		e.foreground = source.foreground;
+		e.background = source.background;
+		e.lining = source.lining;
+		e.fontFace = source.fontFace;
+		e.fontPosture = source.fontPosture;
+		e.fontWeight = source.fontWeight;
+		e.fontSize = source.fontSize;
+		e.superStyle = source.superStyle;
 	}
 	
 	public void installTheme(String theme) {
-		fCurTheme = getThemeEntrySafe(theme);		
+		curTheme = getThemeEntrySafe(theme);		
 	}
 	
 	/** Set backing store for theme of style. If the given theme name does not exist, the method has no effect.
@@ -315,7 +336,7 @@ public class REDStyle implements REDXMLReadable {
 	public void setBackingStore(String theme, File backingStore) {
 		ThemeEntry e = getThemeEntry(theme);
 		if (e != null) {
-			e.fBackingStore = backingStore;
+			e.backingStore = backingStore;
 		}
 	}
 	
@@ -326,15 +347,15 @@ public class REDStyle implements REDXMLReadable {
 	public File getBackingStore(String theme) {
 		ThemeEntry e = getThemeEntry(theme);
 		if (e != null) {
-			return e.fBackingStore;
+			return e.backingStore;
 		}
 		return null;
 	}
 	
 	private boolean styleOk() {
-		return fCurTheme.fSuper != null ||
-			(fCurTheme.fFontFace != null && fCurTheme.fFontSize != INHERITED && fCurTheme.fFontStyle != null 
-				&& fCurTheme.fLining != null && fCurTheme.fForeground != null && fCurTheme.fBackground != null);
+		return curTheme.superStyle != null ||
+			(curTheme.fontFace != null && curTheme.fontSize != INHERITED && curTheme.fontPosture != null && curTheme.fontWeight != null
+				&& curTheme.lining != null && curTheme.foreground != null && curTheme.background != null);
 	}
 	
 	/** Register style at REDStyleManager. XML callback method. */
@@ -346,7 +367,7 @@ public class REDStyle implements REDXMLReadable {
 				REDStyleManager.addStyle(id, this);
 			}
 			REDStyle target = REDStyleManager.getStyle(id);
-			target.merge(theme, this.fCurTheme);
+			target.merge(theme, this.curTheme);
 			target.setBackingStore(theme, (File) manager.getClientData("backingStore"));
 			handler.removeClientData("id");
 			handler.removeClientData("theme");
@@ -369,20 +390,20 @@ public class REDStyle implements REDXMLReadable {
 	  */
 	public Color getForeground(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fForeground == null && e.fSuper != null) {
-			return e.fSuper.getForeground(theme);
+		if (e.foreground == null && e.superStyle != null) {
+			return e.superStyle.getForeground(theme);
 		}
-		return e.fForeground;
+		return e.foreground;
 	}
 
 	/** Get foreground color of style for currently active theme. 
 	  * @return Foreground color object.
 	  */
 	public Color getForeground() {
-		if (fCurTheme.fForeground == null && fCurTheme.fSuper != null) {
-			return fCurTheme.fSuper.getForeground();
+		if (curTheme.foreground == null && curTheme.superStyle != null) {
+			return curTheme.superStyle.getForeground();
 		}
-		return fCurTheme.fForeground;
+		return curTheme.foreground;
 	}
 
 	/** Get background color of style.
@@ -391,20 +412,20 @@ public class REDStyle implements REDXMLReadable {
 	  */
 	public Color getBackground(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fBackground == null && e.fSuper != null) {
-			return e.fSuper.getBackground(theme);
+		if (e.background == null && e.superStyle != null) {
+			return e.superStyle.getBackground(theme);
 		}
-		return e.fBackground;
+		return e.background;
 	}
 	
 	/** Get background color of style for active theme.
 	  * @return Background color object.
 	  */
 	public Color getBackground() {
-		if (fCurTheme.fBackground == null && fCurTheme.fSuper != null) {
-			return fCurTheme.fSuper.getBackground();
+		if (curTheme.background == null && curTheme.superStyle != null) {
+			return curTheme.superStyle.getBackground();
 		}
-		return fCurTheme.fBackground;
+		return curTheme.background;
 	}
 
 	/** Get lining of style.
@@ -413,20 +434,20 @@ public class REDStyle implements REDXMLReadable {
 	  */
 	public REDLining getLining(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fLining == null && e.fSuper != null) {
-			return e.fSuper.getLining(theme);
+		if (e.lining == null && e.superStyle != null) {
+			return e.superStyle.getLining(theme);
 		}
-		return e.fLining;
+		return e.lining;
 	}
 	
 	/** Get lining of style of active theme.
 	  * @return A REDLining object representing the lining of the style.
 	  */
 	public REDLining getLining() {
-		if (fCurTheme.fLining == null && fCurTheme.fSuper != null) {
-			return fCurTheme.fSuper.getLining();
+		if (curTheme.lining == null && curTheme.superStyle != null) {
+			return curTheme.superStyle.getLining();
 		}
-		return fCurTheme.fLining;
+		return curTheme.lining;
 	}
 	
 	/** Get font face of style. 
@@ -435,72 +456,95 @@ public class REDStyle implements REDXMLReadable {
 	  */
 	public String getFontFace(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fFontFace == null || e.fFontFace.equals("")) {
-			return e.fSuper.getFontFace(theme);
+		if (e.fontFace == null || e.fontFace.equals("")) {
+			return e.superStyle.getFontFace(theme);
 		}
-		return e.fFontFace;
+		return e.fontFace;
 	}
 	
 	/** Get font face of style for active theme.
 	  * @return The string representing the font face of the style.
 	  */
 	public String getFontFace() {
-		if (fCurTheme.fFontFace == null || fCurTheme.fFontFace.equals("")) {
-			return fCurTheme.fSuper.getFontFace();
+		if (curTheme.fontFace == null || curTheme.fontFace.equals("")) {
+			return curTheme.superStyle.getFontFace();
 		}
-		return fCurTheme.fFontFace;
+		return curTheme.fontFace;
 	}
 	
-	/** Get font style of style. 
+	/** Get font posture of style. 
 	  * @param theme The theme to look up font style for. If the theme does not exist, the default theme is used.
-	  * @return The font style of the style.
+	  * @return The font posture of the style.
 	  */
-	public String getFontStyle(String theme) {
+	public FontPosture getFontPosture(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fFontStyle == null || e.fFontStyle.equals("")) {
-			return e.fSuper.getFontStyle(theme);
+		if (e.fontPosture == null && e.superStyle != null) {
+			return e.superStyle.getFontPosture(theme);
 		}
-		return e.fFontStyle;
+		return e.fontPosture;
 	}
 
-	/** Get font style of style for active style. 
-	  * @return The font style of the style.
+	/** Get font posture of style for active theme. 
+	  * @return The font posture of the style.
 	  */
-	public String getFontStyle() {
-		if (fCurTheme.fFontStyle == null || fCurTheme.fFontStyle.equals("")) {
-			return fCurTheme.fSuper.getFontStyle();
+	public FontPosture getFontPosture() {
+		if (curTheme.fontPosture == null && curTheme.superStyle != null) {
+			return curTheme.superStyle.getFontPosture();
 		}
-		return fCurTheme.fFontStyle;
+		return curTheme.fontPosture;
 	}
 
+	/** Get font posture of style. 
+	  * @param theme The theme to look up font style for. If the theme does not exist, the default theme is used.
+	  * @return The font posture of the style.
+	  */
+	public FontWeight getFontWeight(String theme) {
+		ThemeEntry e = getThemeEntrySafe(theme);
+		if (e.fontWeight == null && e.superStyle != null) {
+			return e.superStyle.getFontWeight(theme);
+		}
+		return e.fontWeight;
+	}
+
+	/** Get font Weight of style for active theme. 
+	  * @return The font weight of the style.
+	  */
+	public FontWeight getFontWeight() {
+		if (curTheme.fontWeight == null && curTheme.superStyle != null) {
+			return curTheme.superStyle.getFontWeight();
+		}
+		return curTheme.fontWeight;
+	}
+
+	
 	/** Get font size of style. 
 	  * @param theme The theme to look up font size for. If the theme does not exist, the default theme is used.
 	  * @return The font size of the style.
 	  */
 	public int getFontSize(String theme) {
 		ThemeEntry e = getThemeEntrySafe(theme);
-		if (e.fFontSize == INHERITED) {
-			return e.fSuper.getFontSize(theme);
+		if (e.fontSize == INHERITED) {
+			return e.superStyle.getFontSize(theme);
 		}
-		return e.fFontSize;
+		return e.fontSize;
 	}
 	
 	/** Get font size of style for active theme. 
 	  * @return The font size of the style.
 	  */
 	public int getFontSize() {
-		if (fCurTheme.fFontSize == INHERITED) {
-			return fCurTheme.fSuper.getFontSize();
+		if (curTheme.fontSize == INHERITED) {
+			return curTheme.superStyle.getFontSize();
 		}
-		return fCurTheme.fFontSize;
+		return curTheme.fontSize;
 	}
 	
 	/** Get font of style. */
 	public Font getFont() {
-		if (fCurTheme.fFontCache == null) {
-			fCurTheme.fFontCache = Font.decode(getFontFace() + "-" + getFontStyle() + "-" + getFontSize());
+		if (curTheme.fontCache == null) {
+			curTheme.fontCache = Font.font(getFontFace(), getFontWeight(), getFontPosture(), getFontSize());
 		}
-		return fCurTheme.fFontCache;
+		return curTheme.fontCache;
 	}
 
 	/** Get superstyle. 
@@ -508,14 +552,14 @@ public class REDStyle implements REDXMLReadable {
 	  * @return The superstyle of this style or <Code>null</Code> if this style has no superstyle.
 	  */
 	REDStyle getSuperStyle(String theme) {
-		return getThemeEntrySafe(theme).fSuper;
+		return getThemeEntrySafe(theme).superStyle;
 	}
 
 	/** Get superstyle. 
 	  * @return The superstyle of this style or <Code>null</Code> if this style has no superstyle.
 	  */
 	public REDStyle getSuperStyle() {
-		return fCurTheme.fSuper;
+		return curTheme.superStyle;
 	}
 	
 	/** Fixup superstyle. After making a copy of a style hierarchy (REDStyleManager.deepCopy()), super styles must be fixed.
@@ -524,14 +568,14 @@ public class REDStyle implements REDXMLReadable {
 	  * @param map A map containing oldStyle => newStyle mappings.
 	  */
 	void fixupSuperstyle(HashMap<REDStyle, REDStyle> map) {
-		Iterator<ThemeEntry> iter = fThemes.values().iterator();
+		Iterator<ThemeEntry> iter = themes.values().iterator();
 		while (iter.hasNext()) {
 			ThemeEntry e = iter.next();
-			if (e.fSuper != null) {
-				REDStyle newSuper = map.get(e.fSuper);
+			if (e.superStyle != null) {
+				REDStyle newSuper = map.get(e.superStyle);
 				if (newSuper != null) {
-					e.fSuper = newSuper;
-					e.fFontCache = null;
+					e.superStyle = newSuper;
+					e.fontCache = null;
 				}
 			}
 		}
@@ -542,7 +586,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if this is equal or a substyle of <Code>s</Code>
 	  */
 	public boolean isA(REDStyle s) {
-		return s == this || fCurTheme.fSuper != null && fCurTheme.fSuper.isA(s);
+		return s == this || curTheme.superStyle != null && curTheme.superStyle.isA(s);
 	}
 	
 	/** Check for theme entry.
@@ -550,7 +594,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @param return <Code>true</Code>, if this style has the given Theme defined. False otherwise.
 	  */
 	public boolean hasTheme(String theme) {
-		return fThemes.get(theme) != null;
+		return themes.get(theme) != null;
 	}
 	
 	/** Check for definition of foreground.
@@ -558,7 +602,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if the given theme defines the foreground color without using the superstyle.
 	  */
 	public boolean definesForeground(String theme) {
-		return getThemeEntrySafe(theme).fForeground != null;
+		return getThemeEntrySafe(theme).foreground != null;
 	}
 	
 	/** Check for definition of background.
@@ -566,7 +610,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if the given theme defines the background color without using the superstyle.
 	  */
 	public boolean definesBackground(String theme) {
-		return getThemeEntrySafe(theme).fBackground != null;
+		return getThemeEntrySafe(theme).background != null;
 	}
 	
 	/** Check for definition of font face.
@@ -574,7 +618,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if the given theme defines the font face without using the superstyle.
 	  */
 	public boolean definesFontFace(String theme) {
-		return getThemeEntrySafe(theme).fFontFace != null;
+		return getThemeEntrySafe(theme).fontFace != null;
 	}
 	
 	/** Check for definition of font size.
@@ -582,23 +626,32 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if the given theme defines the font size without using the superstyle.
 	  */
 	public boolean definesFontSize(String theme) {
-		return getThemeEntrySafe(theme).fFontSize != INHERITED;
+		return getThemeEntrySafe(theme).fontSize != INHERITED;
 	}
 	
-	/** Check for definition of font style.
+	/** Check for definition of font posture.
 	  * @param theme The theme to check for. If the theme does not exist, the default theme is used.
 	  * @return <Code>true</Code> if the given theme defines the font style without using the superstyle.
 	  */
-	public boolean definesFontStyle(String theme) {
-		return getThemeEntrySafe(theme).fFontStyle != null;
+	public boolean definesFontPosture(String theme) {
+		return getThemeEntrySafe(theme).fontPosture != null;
 	}
+	
+	
+	/** Check for definition of font weight.
+	  * @param theme The theme to check for. If the theme does not exist, the default theme is used.
+	  * @return <Code>true</Code> if the given theme defines the font style without using the superstyle.
+	  */
+	public boolean definesFontWeight(String theme) {
+		return getThemeEntrySafe(theme).fontWeight != null;
+	}	
 	
 	/** Check for definition of lining.
 	  * @param theme The theme to check for. If the theme does not exist, the default theme is used.
 	  * @return <Code>true</Code> if the given theme defines the lining without using the superstyle.
 	  */
 	public boolean definesLining(String theme) {
-		return getThemeEntrySafe(theme).fLining != null;
+		return getThemeEntrySafe(theme).lining != null;
 	}
 	
 	/** Check for definition of superstyle.
@@ -606,14 +659,14 @@ public class REDStyle implements REDXMLReadable {
 	  * @return <Code>true</Code> if the given theme has a superstyle.
 	  */
 	public boolean definesSuperStyle(String theme) {
-		return getThemeEntrySafe(theme).fSuper != null;
+		return getThemeEntrySafe(theme).superStyle != null;
 	}
 	
 	/** Iterate alphabetically over defined theme names.
 	  * @return An iterator which will return String objects in ascending order, representing the defined themes of this style.
 	  */
 	public Iterator<String> themeIterator() {
-		return fThemes.keySet().iterator();
+		return themes.keySet().iterator();
 	}
 	
 	/** Put key <-> value mapping into style.
@@ -621,14 +674,14 @@ public class REDStyle implements REDXMLReadable {
 	  * @param value The value of the mapping.
 	  */
 	void put(Object key, Object value) {
-		fMappings.put(key, value);
+		mappings.put(key, value);
 	}
 	
 	/** Remove key <-> value mapping from style.
 	  * @param key The key of the mapping to remove.
 	  */
 	void remove(Object key) {
-		fMappings.remove(key);
+		mappings.remove(key);
 	}
 	
 	/** Get value from style. 
@@ -636,7 +689,7 @@ public class REDStyle implements REDXMLReadable {
 	  * @return The value associated with the given key, or <Code>null</Code> if it has not got a value for the given key.
 	  */
 	Object get(Object key) {
-		return fMappings.get(key);
+		return mappings.get(key);
 	}
 		
 	/** Auxiliary XML writing method. */
@@ -662,16 +715,17 @@ public class REDStyle implements REDXMLReadable {
 			handler.openTag("Style", "id=\"" + getName() + "\" theme=\"" + theme + "\"");
 		}
 				
-		writeContentEntity(handler, "FontFace", e.fFontFace);
-		if (e.fFontSize != INHERITED) {
-			writeContentEntity(handler, "FontSize", "" + e.fFontSize);
+		writeContentEntity(handler, "FontFace", e.fontFace);
+		if (e.fontSize != INHERITED) {
+			writeContentEntity(handler, "FontSize", "" + e.fontSize);
 		}
-		writeContentEntity(handler, "FontStyle", e.fFontStyle);
-		writeContentEntity(handler, "Lining", e.fLining);	
-		writeColorEntity(handler, "Foreground", e.fForeground);
-		writeColorEntity(handler, "Background", e.fBackground);
-		if (e.fSuper != null) {
-			writeContentEntity(handler, "Super", e.fSuper.getName());
+		writeContentEntity(handler, "FontPosture", e.fontPosture);
+		writeContentEntity(handler, "FontWeight", e.fontWeight);
+		writeContentEntity(handler, "Lining", e.lining);	
+		writeColorEntity(handler, "Foreground", e.foreground);
+		writeColorEntity(handler, "Background", e.background);
+		if (e.superStyle != null) {
+			writeContentEntity(handler, "Super", e.superStyle.getName());
 		}
 		
 		handler.closeTag();
@@ -689,44 +743,42 @@ public class REDStyle implements REDXMLReadable {
 	}
 
 	class ThemeEntry {
-		private Color fForeground;
-		private Color fBackground;
-		private REDLining fLining;
-		private String fFontFace;
-		private String fFontStyle;
-		private int fFontSize;
-		private Font fFontCache;
-		private REDStyle fSuper;
-		private File fBackingStore;
+		private Color foreground;
+		private Color background;
+		private REDLining lining;
+		private String fontFace;
+		private FontPosture fontPosture;
+		private FontWeight fontWeight;
+		private int fontSize;
+		private Font fontCache;
+		private REDStyle superStyle;
+		private File backingStore;
 		
 		boolean equalsEntry(ThemeEntry that) {
-			return fFontSize == that.fFontSize && 
-				fLining == that.fLining &&
-				(fFontStyle == null && that.fFontStyle == null || fFontStyle != null && fFontStyle.equals(that.fFontStyle)) && 
-				(fFontFace == null && that.fFontFace == null || fFontFace != null && fFontFace.equals(that.fFontFace)) &&
-				(fForeground == null && that.fForeground == null || fForeground != null && fForeground.equals(that.fForeground)) && 
-				(fBackground == null && that.fBackground == null || fBackground != null && fBackground.equals(that.fBackground)) && 
-				(fSuper == null && that.fSuper == null || fSuper != null && fSuper.getName().equals(that.fSuper.getName()));
+			return fontSize == that.fontSize && 
+				lining == that.lining &&
+				(fontPosture == null && that.fontPosture == null || fontPosture != null && fontPosture.equals(that.fontPosture)) && 
+				(fontWeight == null && that.fontWeight == null || fontWeight != null && fontWeight.equals(that.fontWeight)) && 
+				(fontFace == null && that.fontFace == null || fontFace != null && fontFace.equals(that.fontFace)) &&
+				(foreground == null && that.foreground == null || foreground != null && foreground.equals(that.foreground)) && 
+				(background == null && that.background == null || background != null && background.equals(that.background)) && 
+				(superStyle == null && that.superStyle == null || superStyle != null && superStyle.getName().equals(that.superStyle.getName()));
 		}
 		
 		ThemeEntry copy() {
 			ThemeEntry e = new ThemeEntry();
-			e.fForeground = fForeground;
-			e.fBackground = fBackground;
-			e.fLining = fLining;
-			e.fFontFace = fFontFace;
-			e.fFontStyle = fFontStyle;
-			e.fFontSize = fFontSize;
-			e.fFontCache = fFontCache;
-			e.fSuper = fSuper;
-			e.fBackingStore = fBackingStore;
+			e.foreground = foreground;
+			e.background = background;
+			e.lining = lining;
+			e.fontFace = fontFace;
+			e.fontPosture = fontPosture;
+			e.fontWeight = fontWeight;
+			e.fontSize = fontSize;
+			e.fontCache = fontCache;
+			e.superStyle = superStyle;
+			e.backingStore = backingStore;
 			return e;
 		}
 	}		
 
-	private TreeMap<String, ThemeEntry> fThemes;
-	private ThemeEntry fCurTheme;
-	private HashMap<Object, Object> fMappings;	
-	private String fName, fDisplayName, fDescription;
-	private REDStyleManagerImpl fManager;
 }

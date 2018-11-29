@@ -24,7 +24,6 @@ import org.rtefx.plugins.*;
 import org.rtefx.plugins.brmatcher.*;
 import org.rtefx.plugins.synhi.*;
 import org.rtefx.rexparser.*;
-import org.rtefx.styleeditor.RTestREDStyleEditor;
 import org.rtefx.util.*;
 import org.rtefx.xml.*;
 	
@@ -45,7 +44,6 @@ public class RTestMaster extends TestCase {
 		suite.addTest(RTestREDMarkTree.suite());
 		suite.addTest(RTestREDFile.suite());
 		suite.addTest(RTestREDText.suite());
-		suite.addTest(RTestREDView.suite());
 		suite.addTest(RTestREDViewLineHeightCache.suite());
 		suite.addTest(RTestREDViewController.suite());
 		suite.addTest(RTestREDViewReadonlyController.suite());
@@ -70,7 +68,6 @@ public class RTestMaster extends TestCase {
 		suite.addTest(RTestREDBracketMatcher.suite());
 		suite.addTest(RTestREDXMLReading.suite());
 		suite.addTest(RTestREDXMLWriting.suite());
-		suite.addTest(RTestREDStyleEditor.suite());
 		suite.addTest(RTestREDTracer.suite());
 		suite.addTest(RTestREDGLog.suite());
 		return suite;

@@ -17,7 +17,8 @@
  
 package org.rtefx.plugins.synhi;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
 import java.util.Iterator;
 
 import org.rtefx.REDLining;
@@ -93,5 +94,5 @@ public class RTestREDSyntaxHighlighterDefinition extends TestCase {
 		return new TestSuite(RTestREDSyntaxHighlighterDefinition.class);
 	}
 	
-	REDStyle fStyle = new REDStyle(new Color(250, 100, 100), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
+	REDStyle fStyle = new REDStyle(new Color(250, 100, 100, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
 }

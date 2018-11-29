@@ -17,7 +17,7 @@
  
 package org.rtefx.plugins.synhi;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.io.File;
 
 import org.rtefx.REDEditor;
@@ -166,10 +166,10 @@ public class RTestREDSyntaxHighlighter extends TestCase {
 	
 	REDSyntaxHighlighterDefinition fDef;
 	REDEditor fEditor;
-	REDStyle fKWStyle = new REDStyle(new Color(250, 100, 100), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
-	REDStyle fRangeStyle1 = new REDStyle(new Color(0, 100, 100), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
-	REDStyle fRangeStyle2 = new REDStyle(new Color(0, 100, 0), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
-	REDStyle fQuotedStyle = new REDStyle(new Color(255, 100, 0), new Color(255, 255, 0), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
+	REDStyle fKWStyle = new REDStyle(new Color(250, 100, 100, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 24, null);
+	REDStyle fRangeStyle1 = new REDStyle(new Color(0, 100, 100, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
+	REDStyle fRangeStyle2 = new REDStyle(new Color(0, 100, 0, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
+	REDStyle fQuotedStyle = new REDStyle(new Color(255, 100, 0, 1), new Color(255, 255, 0, 1), REDLining.SINGLEUNDER, "Monospaced", "ITALIC", 12, null);
 	REDStyle fDefStyle = REDStyleManager.getDefaultStyle();
 	private static String fgContent = 
 "import java.io.*;\n" +
