@@ -19,7 +19,6 @@ public class RTEViewSkin extends VirtualContainerBase<RTEView, RTELineCell> {
     	RTELineCell cell = new RTELineCell(getSkinnable());
         return cell;
     }
-	
 
 	@Override
 	protected int getItemCount() {
